@@ -1,5 +1,16 @@
 {
-    "require": {
-        "psr/log": "*"
+    "name": "erast/php2",
+    "description": "lessons",
+    "type": "project",
+    "license": "MIT",
+    "authors": [{
+        "name": "erast",
+        "email": "don544@mail.ru"
+    }],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "app\\": "app"
+        }
     }
 }
