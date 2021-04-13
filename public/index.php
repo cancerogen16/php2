@@ -8,7 +8,6 @@ ini_set('display_errors', 1);
 require __DIR__ . '/../vendor/autoload.php';
 
 /* штучный физический товар */
-
 $productReal1 = new ProductReal('Кружка', 330, 15);
 
 /* Цифровой товар */
@@ -21,10 +20,19 @@ echo "Штучный товар - {$productReal1->name}. Продано: {$produ
 echo "Цифровой товар - {$productDigital1->name}. Продано: 1 шт. Финальная стоимость: {$productDigital1->getFinalPrice()}. Общая стоимость: {$productDigital1->getTotal()}. Прибыль: {$productDigital1->getProfit()}<hr>";
 echo "Весовой товар - {$productWeight1->name}. Продано: {$productWeight1->weight} кг. Финальная стоимость: {$productWeight1->getFinalPrice()}. Общая стоимость: {$productWeight1->getTotal()}. Прибыль: {$productWeight1->getProfit()}<hr>";
 
-$singleton = Singleton::getInstance();
+class Test {
+    use SingletonTrait;
+
+    public $var;
+
+    public function getVar() {
+    }
+}
+
+$singleton = Test::getInstance();
 
 try {
-    $single = new Singleton();
+    $single = new Test();
 } catch (\Throwable $th) {
     echo 'Выброшено исключение: ',  $th->getMessage(), "\n";
 }
