@@ -7,6 +7,14 @@ ini_set('display_errors', 1);
 
 require_once __DIR__ . '/../config/config.php';
 
-$app = new App;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
-var_dump($app);
+$loader = new FilesystemLoader(TEMPLATES_DIR);
+$twig = new Environment($loader);
+
+echo $twig->render('main.twig', [
+    'title' => 'Main',
+    'name' => 'John Doe',
+    'occupation' => 'gardener'
+]);
