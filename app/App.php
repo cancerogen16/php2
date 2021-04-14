@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace php2\app;
 
 /**
  * Это финальный класс.
