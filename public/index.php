@@ -1,6 +1,6 @@
 <?php
 
-namespace app;
+namespace App;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -13,8 +13,7 @@ use Twig\Loader\FilesystemLoader;
 $loader = new FilesystemLoader(TEMPLATES_DIR);
 $twig = new Environment($loader);
 
-echo $twig->render('main.twig', [
-    'title' => 'Main',
-    'name' => 'John Doe',
-    'occupation' => 'gardener'
+echo $twig->render('home.html.twig', [
+    'title' => 'Главная',
+    'description' => 'Методичка 3. Профессиональная веб-разработка на PHP. Шаблонизаторы'
 ]);

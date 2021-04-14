@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+
+    <div class="images">
+    {% if images %}
+    {% for image in images %}
+        <div class="image__item">
+            <a class="image__link" href="image.php?image_id={{ image.image_id }}" title="{{ image.name }}">
+                <img class="image" src="{{ image.image }}" alt="{{ image.name }}" width="250">
+            </a>
+        </div>
+    {% endfor %}
+    {% else %}
+    <p>Нет изображений!</p>
+    {% endif %}
+    </div>
+    
+{% endblock %}
