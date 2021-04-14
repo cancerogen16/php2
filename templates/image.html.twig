@@ -1,0 +1,18 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+
+    <div class="image">
+    {% if image %}
+        <div class="image__wrap">
+            <img class="full-image" src="/img/{{ image.image }}" alt="{{ image.name }}">
+        </div>
+    {% else %}
+    <p>Нет изображения!</p>
+    {% endif %}
+    </div>
+    
+{% endblock %}

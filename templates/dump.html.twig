@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <style type="text/css">
+        table {
+	        border-collapse: collapse;
+	      }
+	      tr.heading {
+	        font-weight: bolder;
+	      }
+	      td {
+	        border: 1px solid black;
+	        padding: 0 0.5em;
+	      }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <h2>{{ title }}</h2>
+    <table>
+        <tr class="heading">
+            <td>Country</td>
+            <td>Region</td>
+            <td>Population</td>
+            <td>Capital</td>
+            <td>Language</td>
+        </tr>
+        {% if data %}
+        {% for d in data %}
+        <tr>
+            <td>{{ d.name|escape }}</td>
+            <td>{{ d.region|escape }}</td>
+            <td>{{ d.population|escape }}</td>
+            <td>{{ d.capital|escape }}</td>
+            <td>{{ d.language|escape }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="10">Нет данных!</td>
+        </tr>
+        {% endif %}
+    </table>
+{% endblock %}

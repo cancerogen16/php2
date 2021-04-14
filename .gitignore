@@ -1,3 +1,4 @@
 .vscode/launch.json
 vendor/
 /.idea/
+/public/img/

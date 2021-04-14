@@ -7,10 +7,12 @@
         "name": "erast",
         "email": "don544@mail.ru"
     }],
-    "require": {},
+    "require": {
+        "twig/twig": "^3.0"
+    },
     "autoload": {
         "psr-4": {
-            "app\\": "app"
+            "App\\": "app/"
         }
     }
 }
