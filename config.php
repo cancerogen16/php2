@@ -14,9 +14,9 @@ define('IMAGES_DIR', PUBLIC_DIR . '/img/');
 
 // DB
 define('DB_DRIVER', 'mysqli');
-define('DB_HOSTNAME', 'localhost');
-define('DB_USERNAME', 'geekbrains');
-define('DB_PASSWORD', '123456');
-define('DB_DATABASE', 'shop');
+define('DB_HOST', 'localhost');
+define('DB_USER', 'geekbrains');
+define('DB_PASS', '123456');
+define('DB_NAME', 'shop');
 
 require_once VENDOR_DIR . 'autoload.php';
