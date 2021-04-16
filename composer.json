@@ -12,7 +12,10 @@
     },
     "autoload": {
         "psr-4": {
-            "php2\\": ""
+            "Core\\": "core/",
+            "Model\\": "model/",
+            "View\\": "view/",
+            "Controller\\": "controller/"
         }
     }
 }
