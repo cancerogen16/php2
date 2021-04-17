@@ -9,9 +9,15 @@ Class Model_Product Extends Model_Base {
         parent::__construct($select);
     }
 
-    public function getProducts($select = []) {
+    public function getProducts() {
         $results = $this->getAllRows();
 
         return $results;
+    }
+
+    public function getTotalProducts() {
+        $results = $this->getOneRow();
+
+        return $results['total'];
     }
 }

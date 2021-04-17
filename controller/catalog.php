@@ -18,13 +18,22 @@ class Controller_Catalog extends Engine\Controller_Base
         $start = ($page - 1) * $limit;
 
         $select = [
+            'total' => true,
+            'limit' => "$start, $limit",
+        ];
+
+        $modelProduct = new Model\Model_Product($select);
+
+        $totalProducts = $modelProduct->getTotalProducts();
+
+        $select = [
             'order' => 'product_id ASC',
             'limit' => "$start, $limit",
         ];
 
         $modelProduct = new Model\Model_Product($select);
 
-        $results = $modelProduct->getAllRows();
+        $results = $modelProduct->getProducts();
 
         $products = [];
 

@@ -21,7 +21,13 @@ abstract class Model_Base {
 
 		// обработка запроса, если нужно
 		$sql = $this->_getSelect($select);
-		if ($sql) $this->_getResult("SELECT * FROM $this->table" . $sql);
+		if ($sql) {
+            if (!empty($select['total'])) {
+                $this->_getResult("SELECT COUNT(*) as total FROM $this->table" . $sql);
+            } else {
+                $this->_getResult("SELECT * FROM $this->table" . $sql);
+            }
+		}
 	}
 
 	// получить имя таблицы
