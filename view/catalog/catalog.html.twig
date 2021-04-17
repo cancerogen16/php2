@@ -5,18 +5,36 @@
 {% block content %}
     <h1>{{ title }}</h1>
 
-    <div class="products">
-    {% if products %}
-    {% for product in products %}
-        <div class="product__item">
-            <a class="product__link" href="/index.php?route=product/index?product_id={{ product.product_id }}" title="{{ product.name }}">
-                <img class="product" src="assets/img/{{ product.image }}" alt="{{ product.name }}" width="250">
-            </a>
+    <div class="row">
+        <div class="products">
+            {% if products %}
+                {% for product in products %}
+                    <div class="product-card">
+                        <div class="product">
+                            <div class="product__image">
+                                <a class="image__link" href="/index.php?route=product/index?product_id={{ product.product_id }}" title="{{ product.name }}">
+                                    <img class="image" src="assets/img/{{ product.thumb }}" alt="{{ product.name }}" width="200">
+                                </a>
+                            </div>
+                            <div class="product__info">
+                                <h3>
+                                    <a class="product__link" href="/index.php?route=product/index?product_id={{ product.product_id }}" title="{{ product.name }}">
+                                        {{ product.name }}
+                                    </a>
+                                </h3>
+                                <div class="price">
+                                    {{ product.price }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="row-padding">
+                    <p>Нет товаров!</p>
+                </div>
+            {% endif %}
         </div>
-    {% endfor %}
-    {% else %}
-    <p>Нет товаров!</p>
-    {% endif %}
     </div>
     
 {% endblock %}
