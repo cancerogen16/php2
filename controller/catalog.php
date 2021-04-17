@@ -1,6 +1,8 @@
 <?php
 
-class Controller_Catalog extends Engine\Controller_Base
+use Engine\Controller_Base;
+
+class Controller_Catalog extends Controller_Base
 {
     public function index() {
         $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_SPECIAL_CHARS);
