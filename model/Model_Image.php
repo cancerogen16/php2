@@ -20,7 +20,7 @@ class Model_Image extends Model_Base {
         require_once HELPER_DIR . 'utf8.php';
 
 		if (!file_exists(IMAGES_DIR . $filename) || !is_file(IMAGES_DIR . $filename)) {
-			$filename = "noimage.gif";
+			$filename = "noimage.jpg";
 		} 
 		
 		$info = pathinfo($filename);
