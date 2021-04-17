@@ -5,6 +5,7 @@ define('SITE_PATH', $sitePath); // путь к корневой папке са�
 define('ASSETS_DIR', SITE_PATH . 'assets' . DS);
 define('ADMIN_DIR', SITE_PATH . 'public' . DS . 'admin' . DS);
 define('ENGINE_DIR', SITE_PATH . 'engine' . DS);
+define('HELPER_DIR', SITE_PATH . 'helper' . DS);
 define('VENDOR_DIR', SITE_PATH . 'vendor' . DS);
 define('UPLOADS_DIR', SITE_PATH . 'uploads' . DS);
 define('TEMPLATES_DIR', SITE_PATH . 'view' . DS);

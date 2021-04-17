@@ -21,7 +21,13 @@ abstract class Model_Base {
 
 		// обработка запроса, если нужно
 		$sql = $this->_getSelect($select);
-		if ($sql) $this->_getResult("SELECT * FROM $this->table" . $sql);
+		if ($sql) {
+            if (!empty($select['total'])) {
+                $this->_getResult("SELECT COUNT(*) as total FROM $this->table" . $sql);
+            } else {
+                $this->_getResult("SELECT * FROM $this->table" . $sql);
+            }
+		}
 	}
 
 	// получить имя таблицы
@@ -31,7 +37,7 @@ abstract class Model_Base {
 
 	// получить все записи
 	function getAllRows() {
-		if (!isset($this->dataResult) or empty($this->dataResult)) return false;
+		if (!isset($this->dataResult) or empty($this->dataResult)) return [];
 		return $this->dataResult;
 	}
 
@@ -56,7 +62,7 @@ abstract class Model_Base {
 			$db = $this->db;
 			$stmt = $db->query("SELECT * from $this->table WHERE id = $id");
 			$row = $stmt->fetch();
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			echo $e->getMessage();
 			exit;
 		}
@@ -82,7 +88,7 @@ abstract class Model_Base {
 			$db = $this->db;
 			$stmt = $db->prepare("INSERT INTO $this->table ($forQueryFields) values ($forQueryPlace)");
 			$result = $stmt->execute($arrayData);
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			echo 'Error : ' . $e->getMessage();
 			echo '<br/>Error sql : ' . "'INSERT INTO $this->table ($forQueryFields) values ($forQueryPlace)'";
 			exit();
@@ -150,7 +156,7 @@ abstract class Model_Base {
 			//var_dump($sql);exit;
 			$rows = $stmt->fetchAll();
 			$this->dataResult = $rows;
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			echo $e->getMessage();
 			exit;
 		}
@@ -164,7 +170,7 @@ abstract class Model_Base {
 		try {
 			$db = $this->db;
 			$result = $db->exec("DELETE FROM $this->table " . $sql);
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			echo 'Error : ' . $e->getMessage();
 			echo '<br/>Error sql : ' . "'DELETE FROM $this->table " . $sql . "'";
 			exit();
@@ -191,7 +197,7 @@ abstract class Model_Base {
 				foreach ($arrayAllFields as $one) {
 					unset($this->$one);
 				}
-			} catch (PDOException $e) {
+			} catch (\PDOException $e) {
 				echo 'Error : ' . $e->getMessage();
 				echo '<br/>Error sql : ' . "'DELETE FROM $this->table WHERE `id` = $this->id'";
 				exit();
@@ -231,7 +237,7 @@ abstract class Model_Base {
 			$db = $this->db;
 			$stmt = $db->prepare("UPDATE $this->table SET $strForSet WHERE `id` = $whereID");
 			$result = $stmt->execute();
-		} catch (PDOException $e) {
+		} catch (\PDOException $e) {
 			echo 'Error : ' . $e->getMessage();
 			echo '<br/>Error sql : ' . "'UPDATE $this->table SET $strForSet WHERE `id` = $whereID'";
 			exit();

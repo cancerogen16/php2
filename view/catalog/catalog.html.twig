@@ -1,0 +1,45 @@
+{% extends "common/base.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+
+    <div class="row products-wrap">
+        <div class="products">
+            {% if products %}
+                {% for product in products %}
+                    <div class="product-card">
+                        <div class="product">
+                            <div class="product__image">
+                                <a class="image__link" href="/index.php?route=product/index&product_id={{ product.product_id }}" title="{{ product.name }}">
+                                    <img class="image" src="assets/img/{{ product.thumb }}" alt="{{ product.name }}" width="200">
+                                </a>
+                            </div>
+                            <div class="product__info">
+                                <h3>
+                                    <a class="product__link" href="/index.php?route=product/index&product_id={{ product.product_id }}" title="{{ product.name }}">
+                                        {{ product.name }}
+                                    </a>
+                                </h3>
+                                <div class="price">
+                                    {{ product.price }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="row-padding">
+                    <p>Нет товаров!</p>
+                </div>
+            {% endif %}
+        </div>
+        {% if restProducts %}
+            <div class="row-padding more-products">
+                <a class="more-products__link btn" data-page="{{ page }}" href="/index.php?route=catalog/index&page={{ page }}" title="Подгрузить ещё товары">Еще</a>
+            </div>
+        {% endif %}
+    </div>
+    
+{% endblock %}
