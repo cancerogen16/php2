@@ -35,6 +35,8 @@ class Controller_Catalog extends Engine\Controller_Base
 
         $results = $modelProduct->getProducts();
 
+        $restProducts = $totalProducts - count($results);
+
         $products = [];
 
         $image_product_width = 150;
@@ -67,7 +69,9 @@ class Controller_Catalog extends Engine\Controller_Base
 
         $this->render('catalog/catalog.html.twig', [
             'title' => 'Каталог товаров',
-            'products' => $products
+            'products' => $products,
+            'totalProducts' => $totalProducts,
+            'restProducts' => $restProducts,
         ]);
     }
 }

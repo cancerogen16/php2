@@ -35,6 +35,11 @@
                 </div>
             {% endif %}
         </div>
+        {% if restProducts %}
+            <div class="row-padding more-products">
+                <a class="more-products__link btn" href="/index.php?route=product/index?product_id={{ product.product_id }}" title="Подгрузить ещё товары">Еще</a>
+            </div>
+        {% endif %}
     </div>
     
 {% endblock %}
