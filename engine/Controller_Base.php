@@ -22,8 +22,4 @@ abstract class Controller_Base {
 	protected function render($template, $data) {
         echo $this->twig->render($template, $data);
     }
-
-    protected function getContent($template, $data) {
-        return $this->twig->render($template, $data);
-    }
 }
