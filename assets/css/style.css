@@ -82,6 +82,13 @@ p{
   display:block;
   font-size:12px;
 }
+.form-group{
+  margin-bottom:1rem;
+}
+.form-group label{
+  display:inline-block;
+  min-width:200px;
+}
 .btns{
   display:flex;
   align-items:center;
@@ -157,4 +164,21 @@ p{
 .more-products{
   text-align:center;
   margin:20px 0;
+}
+.product-section{
+  display:flex;
+  align-items:flex-start;
+}
+.image-wrap{
+  max-width:70%;
+}
+.upload{
+  margin-top:20px;
+}
+.product-image{
+  margin:0 40px 20px 0;
+  max-width:60%;
+}
+.full-image{
+  max-width:100%;
 }
