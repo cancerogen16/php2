@@ -37,7 +37,7 @@ abstract class Model_Base {
 
 	// получить все записи
 	function getAllRows() {
-		if (!isset($this->dataResult) or empty($this->dataResult)) return false;
+		if (!isset($this->dataResult) or empty($this->dataResult)) return [];
 		return $this->dataResult;
 	}
 
