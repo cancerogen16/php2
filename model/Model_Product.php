@@ -20,4 +20,10 @@ Class Model_Product Extends Model_Base {
 
         return $results['total'];
     }
+
+    public function getProduct() {
+        $results = $this->getOneRow();
+
+        return $results;
+    }
 }
