@@ -140,6 +140,8 @@ p {
   text-align:center;
 }
 .product__link{
+  min-height: 60px;
+  display: block;
   text-decoration:none;
 }
 .product:hover .product__link{
