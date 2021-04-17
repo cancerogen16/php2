@@ -3,6 +3,16 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once __DIR__ . '/config.php';
+if (is_file('config.php')) {
+    require_once('config.php');
+}
 
-echo "test";
+$dbObject = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+$dbObject->exec('SET CHARACTER SET utf8');
+
+// Загружаем router
+$router = new Engine\Router();
+// задаем путь до папки контроллеров.
+$router->setPath(SITE_PATH . 'controller');
+// запускаем маршрутизатор
+$router->start();
