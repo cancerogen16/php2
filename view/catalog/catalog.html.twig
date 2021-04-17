@@ -5,7 +5,7 @@
 {% block content %}
     <h1>{{ title }}</h1>
 
-    <div class="row">
+    <div class="row products-wrap">
         <div class="products">
             {% if products %}
                 {% for product in products %}
@@ -37,7 +37,7 @@
         </div>
         {% if restProducts %}
             <div class="row-padding more-products">
-                <a class="more-products__link btn" href="/index.php?route=product/index?product_id={{ product.product_id }}" title="Подгрузить ещё товары">Еще</a>
+                <a class="more-products__link btn" data-page="{{ page }}" href="/index.php?route=catalog/index?page={{ page }}" title="Подгрузить ещё товары">Еще</a>
             </div>
         {% endif %}
     </div>
