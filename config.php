@@ -8,7 +8,7 @@ define('ENGINE_DIR', SITE_PATH . 'engine' . DS);
 define('VENDOR_DIR', SITE_PATH . 'vendor' . DS);
 define('UPLOADS_DIR', SITE_PATH . 'uploads' . DS);
 define('LAYOUTS_DIR', SITE_PATH . 'layouts' . DS);
-define('TEMPLATES_DIR', SITE_PATH . 'templates' . DS);
+define('TEMPLATES_DIR', SITE_PATH . 'view' . DS . 'templates' . DS);
 define('IMAGES_DIR', PUBLIC_DIR . 'img' . DS);
 
 // DB
