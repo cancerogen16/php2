@@ -71,6 +71,7 @@ class Controller_Catalog extends Engine\Controller_Base
             'title' => 'Каталог товаров',
             'products' => $products,
             'totalProducts' => $totalProducts,
+            'page' => $page + 1,
             'restProducts' => $restProducts,
         ]);
     }
