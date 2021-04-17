@@ -1,0 +1,22 @@
+{% extends "common/base.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+
+    <div class="products">
+    {% if products %}
+    {% for product in products %}
+        <div class="product__item">
+            <a class="product__link" href="/index.php?route=product/index?product_id={{ product.product_id }}" title="{{ product.name }}">
+                <img class="product" src="assets/img/{{ product.image }}" alt="{{ product.name }}" width="250">
+            </a>
+        </div>
+    {% endfor %}
+    {% else %}
+    <p>Нет товаров!</p>
+    {% endif %}
+    </div>
+    
+{% endblock %}
