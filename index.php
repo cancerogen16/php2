@@ -1,18 +1,17 @@
 <?php
+require_once 'app/config/config.php';
+require 'app/lib/Dev.php';
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+use app\core\Router;
 
-if (is_file('config.php')) {
-    require_once('config.php');
-}
+spl_autoload_register(function($class) {
+    $path = str_replace('\\', '/', $class.'.php');
+    if (file_exists($path)) {
+        require $path;
+    }
+});
 
-$dbObject = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
-$dbObject->exec('SET CHARACTER SET utf8');
+session_start();
 
-// Загружаем router
-$router = new Engine\Router();
-// задаем путь до папки контроллеров.
-$router->setPath(SITE_PATH . 'controller');
-// запускаем маршрутизатор
-$router->start();
+$router = new Router;
+$router->run();
