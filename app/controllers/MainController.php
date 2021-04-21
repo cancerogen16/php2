@@ -18,9 +18,7 @@ class MainController extends Controller
             'action' => 'header',
         ]);
 
-        $template = 'common/header.html.twig';
-
-        $vars['header'] = $header->view->render($template, $vars);
+        $vars['header'] = $header->headerAction();
 
         $template = 'common/home.html.twig';
 

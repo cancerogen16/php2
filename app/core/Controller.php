@@ -2,7 +2,8 @@
 
 namespace app\core;
 
-use app\core\View;
+use app\models\User;
+use app\core\Router;
 
 abstract class Controller
 {
@@ -11,11 +12,15 @@ abstract class Controller
     public $view;
     public $acl;
 
+    public $user;
+
     public function __construct($route)
     {
         $this->route = $route;
 
         $this->view = new View($route);
+
+        $this->user = new User();
 
         if (!$this->checkAcl()) {
             $vars = [];
@@ -37,8 +42,6 @@ abstract class Controller
             return false;
         }
     }
-
-
 
     public function checkAcl()
     {

@@ -75,9 +75,7 @@ class ProductController extends Controller
             'action' => 'header',
         ]);
 
-        $template = 'common/header.html.twig';
-
-        $vars['header'] = $header->view->render($template, $vars);
+        $vars['header'] = $header->headerAction();
 
         $template = 'product/catalog.html.twig';
 
