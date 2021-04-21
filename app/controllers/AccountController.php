@@ -49,9 +49,9 @@ class AccountController extends Controller
                         $_SESSION["user_role"] = $user['user_role'];
 
                         if ($user['user_role'] == 'admin') {
-                            header("location: /admin/index.php");
+                            $this->view->redirect('/admin');
                         } else {
-                            header("location: /index.php");
+                            $this->view->redirect('/');
                         }
 
                         exit();
@@ -74,6 +74,23 @@ class AccountController extends Controller
         $template = 'account/login.html.twig';
 
         $this->view->display($template, $vars);
+    }
+
+    public function logoutAction()
+    {
+        $user_id = 0;
+
+        if (isset($_SESSION["user_id"]) && $_SESSION["user_id"]) {
+            $user_id = (int)$_SESSION["user_id"];
+        }
+
+        //deleteCart($user_id);
+
+        $_SESSION = [];
+
+        session_destroy();
+
+        $this->view->redirect('/');
     }
 
     public function registerAction()

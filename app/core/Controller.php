@@ -27,7 +27,7 @@ abstract class Controller
 
             $template = 'errors/403.html.twig';
 
-            $this->twig->display($template, $vars);
+            $this->view->display($template, $vars);
         }
 
         $this->model = $this->loadModel($route['controller']);
