@@ -5,14 +5,16 @@
 {% block content %}
     <div class="row">
         <div class="col-5">
-            <form action="/account/login" method="post">
+            <form action="/account/login" method="post" class="login-form validate">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Логин</label>
-                    <input type="text" class="form-control" id="name" placeholder="Логин">
+                    <label for="username" class="form-label">Логин</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Логин" required>
+                    <span class="field-error">{{ username_err }}</span>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Пароль</label>
-                    <input type="password" class="form-control" id="password" placeholder="Пароль">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Пароль" required>
+                    <span class="field-error">{{ password_err }}</span>
                 </div>
                 <button type="submit" class="btn btn-primary mb-3">Вход</button>
             </form>
