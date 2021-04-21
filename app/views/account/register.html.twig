@@ -1,0 +1,16 @@
+{% extends "layouts/default.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ title }}</h2>
+    <form>
+        <label>Логин</label>
+        <p><input type="text"></p>
+        <label>Пароль</label>
+        <p><input type="text"></p>
+        <b>
+            <button>Регистрация</button>
+        </b>
+    </form>
+{% endblock %}
