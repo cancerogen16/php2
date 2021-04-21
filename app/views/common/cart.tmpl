@@ -1,0 +1,33 @@
+<!-- begin: cart.tmpl -->
+<div class="header-cart">
+    <a class="cart__link" href="/cart">Корзина ( {{ cart.count }} )</a>
+    {% if cart_products %}
+        <div class="cart-content">
+            <table>
+                <tbody>
+                {% for product in cart_products %}
+                    <tr>
+                        <td><img src="/public/img/{{ product.thumb }}" alt="{{ product.name }}" width="24"></td>
+                        <td><a class="cart__link" href="/product?product_id={{ product.product_id }}">{{ product.name }}</a>
+                        </td>
+                        <td class="price">{{ product.price }}</td>
+                        <td><?= $product['quantity'] ?></td>
+                        <td class="price">{{ product.total }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="3">Итого</td>
+                    <td>{{ cart.count }}</td>
+                    <td class="price">{{ cart.total }}</td>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="checkout-button">
+                <a class="btn btn-primary" href="/checkout">Оформить заказ</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+<!-- end: cart.tmpl -->

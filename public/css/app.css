@@ -11,22 +11,12 @@ html{box-sizing:border-box;-ms-overflow-style:scrollbar}
   align-items:center;
   justify-content:space-between;
 }
-.header-row__right{
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-}
-.menu{
-  display:flex;
-  align-items:center;
-}
 .menu__item{
   margin-bottom:15px;
-  margin-left:20px;
   margin-top:15px;
 }
-.menu__item + .menu__item{
-  margin-left:50px;
+.cart-wrap{
+  margin-right:20px;
 }
 .field-error{
   color:red;
@@ -73,6 +63,16 @@ html{box-sizing:border-box;-ms-overflow-style:scrollbar}
 }
 .header{
   border:1px solid #ccc;
+}
+.account{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+}
+.login,
+.logout,
+.register{
+  margin:0 10px;
 }
 .content{
   padding-top:15px;
