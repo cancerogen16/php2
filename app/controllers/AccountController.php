@@ -147,7 +147,7 @@ class AccountController extends Controller
 
                     $this->view->redirect('/');
                 } else {
-                    $message = "Что-то пошло не так. Попробуйте ещё раз";
+                    $vars['message'] = "Что-то пошло не так. Попробуйте ещё раз";
                 }
             }
         }
