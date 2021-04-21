@@ -7,17 +7,17 @@ use PDO;
 class Db
 {
 
-    protected $db;
+    protected $pdo;
 
     public function __construct()
     {
         $config = require 'app/config/db.php';
-        $this->db = new PDO('mysql:host=' . $config['host'] . ';dbname=' . $config['name'] . '', $config['user'], $config['password']);
+        $this->pdo = new PDO('mysql:host=' . $config['host'] . ';dbname=' . $config['name'] . '', $config['user'], $config['password']);
     }
 
     public function query($sql, $params = [])
     {
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->pdo->prepare($sql);
         if (!empty($params)) {
             foreach ($params as $key => $val) {
                 $stmt->bindValue(':' . $key, $val);
@@ -44,6 +44,4 @@ class Db
         $result = $this->query($sql, $params);
         return $result->fetchColumn();
     }
-
-
 }
