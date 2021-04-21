@@ -71,6 +71,12 @@ html{box-sizing:border-box;-ms-overflow-style:scrollbar}
 .btn.remove{
   background:#f95b5b;
 }
+.header{
+  border:1px solid #ccc;
+}
+.content{
+  padding-top:15px;
+}
 .product{
   border:1px solid #888;
   border-radius:5px;
