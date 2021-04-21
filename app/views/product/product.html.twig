@@ -4,9 +4,8 @@
 
 {% block content %}
     {% if product %}
-        <h1>{{ product.name }}</h1>
-        <div class="product-section">
-            <div class="product-image">
+        <div class="row">
+            <div class="col-6">
                 {% if product.image %}
                     <div class="image__wrap">
                         <img class="full-image" src="public/img/{{ product.thumb }}" alt="{{ product.name }}">
@@ -15,7 +14,7 @@
                     <p>Нет изображения в базе данных</p>
                 {% endif %}
             </div>
-            <div class="product-description">
+            <div class="col-6">
                 <div class="description-item">Наименование:
                     {{ product.name }}
                 </div>
@@ -29,8 +28,8 @@
                     {{ product.views }}
                 </div>
                 <div class="product-cart">
-                    <a class="btn addToCart" data-id="{{ product.product_id }}"
-                       href="product.php?addToCart=1&product_id={{ product.product_id }}"
+                    <a class="btn btn-primary addToCart" data-id="{{ product.product_id }}"
+                       href="/product?addToCart=1&product_id={{ product.product_id }}"
                        title="Добавить товар в корзину">Добавить в корзину</a>
                 </div>
             </div>
