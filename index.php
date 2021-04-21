@@ -2,14 +2,9 @@
 require_once 'app/config/config.php';
 require 'app/lib/Dev.php';
 
-use app\core\Router;
+require_once DIR_VENDOR . 'autoload.php';
 
-spl_autoload_register(function($class) {
-    $path = str_replace('\\', '/', $class.'.php');
-    if (file_exists($path)) {
-        require $path;
-    }
-});
+use app\core\Router;
 
 session_start();
 
