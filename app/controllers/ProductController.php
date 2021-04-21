@@ -70,16 +70,25 @@ class ProductController extends Controller
         $vars['totalProducts'] = $totalProducts;
         $vars['restProducts'] = $restProducts;
 
+        $header = new CommonController([
+            'controller' => 'common',
+            'action' => 'header',
+        ]);
+
+        $template = 'common/header.html.twig';
+
+        $vars['header'] = $header->view->render($template, $vars);
+
         $template = 'product/catalog.html.twig';
 
-        $this->view->render($template, $vars);
+        $this->view->display($template, $vars);
     }
 
     public function categoryAction()
     {
         $vars = [];
 
-        $this->view->render('category', $vars);
+        $this->view->display('category', $vars);
     }
 
     public function productAction()
@@ -110,6 +119,6 @@ class ProductController extends Controller
 
         $template = 'product/product.html.twig';
 
-        $this->view->render($template, $vars);
+        $this->view->display($template, $vars);
     }
 }

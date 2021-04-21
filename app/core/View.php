@@ -28,6 +28,11 @@ class View
 
     public function render($template, $vars = [])
     {
+        return $this->twig->render($template, $vars);
+    }
+
+    public function display($template, $vars = [])
+    {
         $this->twig->display($template, $vars);
     }
 
