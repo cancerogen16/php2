@@ -38,9 +38,9 @@ class User extends Model
      * @return bool
      */
     public function existUser($username): bool {
-        $query = "SELECT user_id FROM user WHERE username = '" . protect($username) . "'";
+        $sql = "SELECT user_id FROM user WHERE username = '$username'";
 
-        $results = get_db_result($query);
+        $results = $this->db->all($sql);
 
         return (count($results) == 1) ? false : true;
     }
@@ -57,9 +57,9 @@ class User extends Model
 
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-        $query = "SELECT * FROM user"; // получение из базы всех пользователей
+        $sql = "SELECT * FROM user"; // получение из базы всех пользователей
 
-        $results = get_db_result($query);
+        $results = $this->db->all($sql);
 
         if (count($results) == 0) { // если пользователь первый
             $user_role = 'admin';
@@ -67,9 +67,16 @@ class User extends Model
             $user_role = 'customer';
         }
 
-        $query = "INSERT INTO user (username, password, user_role, ip) VALUES ('" . protect($username) . "', '" . $password_hash . "', '" . $user_role . "', '" . $ip . "')";
+        $sql = "INSERT INTO user (username, password, user_role, ip) VALUES (:username, :password, :user_role, :ip)";
 
-        return update_db($query);
+        $this->db->query($sql, [
+            'username' => $username,
+            'password' => $password_hash,
+            'user_role' => $user_role,
+            'ip' => $ip,
+        ]);
+
+        return 1;
     }
 
     /**
