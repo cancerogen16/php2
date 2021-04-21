@@ -20,4 +20,7 @@ jQuery(document).ready(function ($) {
                 $container.parent().find('.more-products').html($html.find('.more-products').html());
             });
     });
+
+    $(".validate").validate();
+
 });
