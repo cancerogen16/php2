@@ -31,8 +31,10 @@
         {% endif %}
     </div>
     {% if restProducts %}
-        <div class="row-padding more-products">
-            <a class="more-products__link btn" data-page="{{ page }}" href="/catalog?page={{ page }}" title="Подгрузить ещё товары">Еще</a>
+        <div class="row more-products">
+            <div class="col">
+                <a class="more-products__link btn" data-page="{{ page }}" href="/catalog?page={{ page }}" title="Подгрузить ещё товары">Еще</a>
+            </div>
         </div>
     {% endif %}
     
