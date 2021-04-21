@@ -40,6 +40,8 @@ class ProductController extends Controller
 
         $results = $this->model->getProducts($data);
 
+        $restProducts = $totalProducts - count($results);
+
         if (!empty($results)) {
             foreach ($results as $result) {
                 if ($result['image']) {
@@ -48,7 +50,7 @@ class ProductController extends Controller
                     $image = resize('noimage.jpg', $image_product_width, $image_product_height);
                 }
 
-                $href = "/product/product?product_id={$result['product_id']}";
+                $href = "/product?product_id={$result['product_id']}";
 
                 $products[] = [
                     'product_id' => $result['product_id'],
@@ -62,14 +64,15 @@ class ProductController extends Controller
             }
         }
 
-        $title = 'Каталог товаров';
-
+        $vars['title'] = 'Каталог товаров';
         $vars['products'] = $products;
-        $vars['page'] = $page;
-        $vars['totalProducts'] = $products;
-        $vars['restProducts'] = $products;
+        $vars['page'] = $page + 1;
+        $vars['totalProducts'] = $totalProducts;
+        $vars['restProducts'] = $restProducts;
 
-        $this->view->render($title, $vars);
+        $template = 'product/catalog.html.twig';
+
+        $this->view->render($template, $vars);
     }
 
     public function categoryAction()
@@ -101,10 +104,12 @@ class ProductController extends Controller
         $product_info['thumb'] = $image;
         $product_info['price'] = priceFormat($product_info['price']);
 
-        $title = $product_info['name'];
+        $vars['title'] = $product_info['name'];
 
-        $vars['product_info'] = $product_info;
+        $vars['product'] = $product_info;
 
-        $this->view->render($title, $vars);
+        $template = 'product/product.html.twig';
+
+        $this->view->render($template, $vars);
     }
 }

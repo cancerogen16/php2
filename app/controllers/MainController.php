@@ -9,13 +9,12 @@ class MainController extends Controller
 
     public function indexAction()
     {
-        $result = $this->model->getNews();
-
         $vars = [
-            'news' => $result,
+            'title' => 'Главная страница',
         ];
 
-        $this->view->render('Главная страница', $vars);
-    }
+        $template = 'common/home.html.twig';
 
+        $this->view->render($template, $vars);
+    }
 }

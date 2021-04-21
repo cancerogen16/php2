@@ -9,16 +9,24 @@ class AccountController extends Controller
 
     public function loginAction()
     {
-        if (!empty($_POST)) {
-            $this->view->location('/');
-        }
+        $vars = [
+            'title' => 'Авторизация',
+        ];
 
-        $this->view->render('Вход');
+        $template = 'account/login.html.twig';
+
+        $this->view->render($template, $vars);
     }
 
     public function registerAction()
     {
-        $this->view->render('Регистрация');
+        $vars = [
+            'title' => 'Регистрация',
+        ];
+
+        $template = 'account/register.html.twig';
+
+        $this->view->render($template, $vars);
     }
 
 }

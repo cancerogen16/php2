@@ -14,10 +14,17 @@ abstract class Controller
     public function __construct($route)
     {
         $this->route = $route;
-        if (!$this->checkAcl()) {
-            View::errorCode(403);
-        }
+
         $this->view = new View($route);
+
+        if (!$this->checkAcl()) {
+            $vars = [];
+
+            $template = 'errors/403.html.twig';
+
+            $this->twig->display($template, $vars);
+        }
+
         $this->model = $this->loadModel($route['controller']);
     }
 
@@ -30,6 +37,8 @@ abstract class Controller
             return false;
         }
     }
+
+
 
     public function checkAcl()
     {

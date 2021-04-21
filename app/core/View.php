@@ -2,29 +2,33 @@
 
 namespace app\core;
 
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+
 class View
 {
 
     public $path;
     public $route;
-    public $layout = 'default';
+    protected $twig;
 
     public function __construct($route)
     {
         $this->route = $route;
         $this->path = $route['controller'] . '/' . $route['action'];
+
+        $params = [
+            'debug' => true
+        ];
+
+        $loader = new FilesystemLoader(DIR_TEMPLATES);
+
+        $this->twig = new Environment($loader, $params);
     }
 
-    public function render($title, $vars = [])
+    public function render($template, $vars = [])
     {
-        extract($vars);
-        $path = 'app/views/' . $this->path . '.php';
-        if (file_exists($path)) {
-            ob_start();
-            require $path;
-            $content = ob_get_clean();
-            require 'app/views/layouts/' . $this->layout . '.php';
-        }
+        $this->twig->display($template, $vars);
     }
 
     public function redirect($url)
