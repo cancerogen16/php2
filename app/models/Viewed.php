@@ -36,6 +36,10 @@ class Viewed extends Model
         if ($views_count == 0) {
             $viewed_pages = $this->getViewed($user_id);
 
+            if (count($viewed_pages) >= 5) {
+                $this->deleteViewed($viewed_pages);
+            }
+
             $sql = "INSERT INTO viewed (user_id, url, views) VALUES (:user_id, :url, :views)";
 
             $views_count++;
@@ -54,5 +58,18 @@ class Viewed extends Model
         }
 
         return $views_count;
+    }
+
+    public function deleteViewed($viewed_pages)
+    {
+        $limit = 3;
+
+        foreach ($viewed_pages as $p => $page) {
+            if ($p > $limit) {
+                $sql = "DELETE FROM viewed WHERE user_id = '" . (int)$page['user_id'] . "' AND url = '" . $page['url'] . "'";
+
+                $this->db->query($sql);
+            }
+        }
     }
 }
