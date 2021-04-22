@@ -1,0 +1,41 @@
+{% extends "layouts/default.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="products row row-cols-5">
+        {% if products %}
+            {% for product in products %}
+                <div class="product-card col">
+                    <div class="product">
+                        <div class="product__image">
+                            <a class="image__link" href="/product?product_id={{ product.product_id }}" title="{{ product.name }}">
+                                <img class="image" src="public/img/{{ product.thumb }}" alt="{{ product.name }}" width="200">
+                            </a>
+                        </div>
+                        <div class="product__info">
+                            <a class="product__link" href="/product?product_id={{ product.product_id }}" title="{{ product.name }}">
+                                {{ product.name }}
+                            </a>
+                            <div class="price">
+                                {{ product.price }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="row-padding">
+                <p>Нет товаров!</p>
+            </div>
+        {% endif %}
+    </div>
+    {% if restProducts %}
+        <div class="row more-products">
+            <div class="col">
+                <a class="more-products__link btn btn-secondary" data-page="{{ page }}" href="/catalog?page={{ page }}" title="Подгрузить ещё товары">Еще</a>
+            </div>
+        </div>
+    {% endif %}
+    
+{% endblock %}

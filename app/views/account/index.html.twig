@@ -1,0 +1,42 @@
+{% extends "layouts/default.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="row"><div class="col">{{ message }}</div></div>
+    <div class="row">
+        <div class="col">
+            <h2>Вы недавно смотрели</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% if viewed_pages %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Ссылка</th>
+                        <th>Количество просмотров</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for page in viewed_pages %}
+                        <tr>
+                            <td>
+                                <a class="viewed-page__link" href="{{ host }}{{ page.url }}" title="{{ host }}{{ page.url }}">
+                                    {{ host }}{{ page.url }}
+                                </a>
+                            </td>
+                            <td>{{ page.views }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="row-padding">
+                    <p>Нет просмотренных страниц!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

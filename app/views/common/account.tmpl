@@ -1,0 +1,21 @@
+<!-- begin: account.tmpl -->
+<div class="account">
+    {% if logged %}
+        <div class="login">
+            <a href="/account?id={{ user_id }}">{{ username }}</a>
+        </div>
+        |
+        <div class="logout">
+            <a href="/account/logout">Выйти</a>
+        </div>
+    {% else %}
+        <div class="login">
+            <a href="/account/login">Войти</a>
+        </div>
+        |
+        <div class="register">
+            <a href="/account/register">Регистрация</a>
+        </div>
+    {% endif %}
+</div>
+<!-- end: account.tmpl -->
