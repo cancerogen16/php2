@@ -80,14 +80,26 @@ class User extends Model
     }
 
     /**
-     * Получение данных пользователя из базы по его имени
+     * Получение пользователей из базы по имени
      *
      * @param  string $username
      * @return array
      */
-    public function getUser($username) {
+    public function getUsers($username) {
         $sql = "SELECT * FROM user WHERE username = '$username'";
 
         return $this->db->all($sql);
+    }
+
+    /**
+     * Получение данных пользователя из базы по его ID
+     *
+     * @param  int $user_id
+     * @return array
+     */
+    public function getUser($user_id = 0) {
+        $sql = "SELECT * FROM user WHERE user_id = '" . (int)$user_id . "'";
+
+        return $this->db->one($sql);
     }
 }
