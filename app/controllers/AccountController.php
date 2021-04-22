@@ -7,6 +7,34 @@ use app\models\User;
 
 class AccountController extends Controller
 {
+    public function indexAction()
+    {
+        $user_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        $user = $this->user->getUser($user_id);
+
+        if (empty($user)) {
+            $vars = [
+                'title' => 'Отсутствуют данные пользователя №' . $user_id,
+            ];
+        } else {
+            $vars = [
+                'title' => 'Личный кабинет пользователя ' . $user['username'],
+            ];
+        }
+
+        $header = new CommonController([
+            'controller' => 'common',
+            'action' => 'header',
+        ]);
+
+        $vars['header'] = $header->headerAction();
+
+        $template = 'account/index.html.twig';
+
+        $this->view->display($template, $vars);
+    }
+
     public function loginAction()
     {
         if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
@@ -35,7 +63,7 @@ class AccountController extends Controller
             }
 
             if (empty($vars['username_err']) && empty($vars['password_err'])) {
-                $users = $this->user->getUser($vars['username']);
+                $users = $this->user->getUsers($vars['username']);
 
                 if (count($users) == 1) {
                     $user = reset($users);
@@ -132,7 +160,7 @@ class AccountController extends Controller
 
             if (empty($vars['username_err']) && empty($vars['password_err']) && empty($vars['confirm_password_err'])) {
                 if ($this->user->addUser($vars['username'], $vars['password'])) {
-                    $users = $this->user->getUser($vars['username']);
+                    $users = $this->user->getUsers($vars['username']);
 
                     if (count($users) == 1) {
                         $user = reset($users);
