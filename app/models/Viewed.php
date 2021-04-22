@@ -31,26 +31,26 @@ class Viewed extends Model
      * @return int количество просмотров данной страницы данным пользователем
      */
     public function addView($user_id = 0, $url = '') {
-        $views = (int)$this->getViews($user_id, $url)['views'];
+        $views_count = (int)$this->getViews($user_id, $url)['views'];
 
-        if ($views == 0) {
+        if ($views_count == 0) {
             $sql = "INSERT INTO viewed (user_id, url, views) VALUES (:user_id, :url, :views)";
 
-            $views++;
+            $views_count++;
 
             $this->db->query($sql, [
                 'user_id' => $user_id,
                 'url' => $url,
-                'views' => $views,
+                'views' => $views_count,
             ]);
         } else {
             $sql = "UPDATE viewed SET views = views + 1 WHERE user_id = '" . (int)$user_id . "' AND url = '" . $url . "'";
 
             $this->db->query($sql);
 
-            $views++;
+            $views_count++;
         }
 
-        return $views;
+        return $views_count;
     }
 }
