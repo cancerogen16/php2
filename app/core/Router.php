@@ -3,6 +3,8 @@
 namespace app\core;
 
 use app\core\View;
+use app\models\User;
+use app\models\Viewed;
 
 class Router
 {
@@ -28,6 +30,16 @@ class Router
     {
         $url = trim($_SERVER['REQUEST_URI'], '/');
         $parts = parse_url($url);
+
+        $user = new User;
+
+        $user_id = $user->getUserId();
+
+        if ($user_id) {
+            $viewed = new Viewed;
+
+            $viewed->addView($user_id, $url);
+        }
 
         if ($parts) {
             foreach ($this->routes as $route => $params) {

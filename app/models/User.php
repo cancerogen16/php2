@@ -102,4 +102,8 @@ class User extends Model
 
         return $this->db->one($sql);
     }
+
+    public function getUserId() {
+        return isset($_SESSION['user_id']) && $_SESSION['loggedin'] == true ? $_SESSION['user_id'] : 0;
+    }
 }
