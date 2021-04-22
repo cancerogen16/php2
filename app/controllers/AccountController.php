@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use app\core\Controller;
-use app\models\User;
+use app\models\Viewed;
 
 class AccountController extends Controller
 {
@@ -21,6 +21,13 @@ class AccountController extends Controller
             $vars = [
                 'title' => 'Личный кабинет пользователя ' . $user['username'],
             ];
+
+            $viewed = new Viewed;
+
+            $viewed_pages = $viewed->getViewed($user_id);
+
+            $vars['host'] = 'http://' . $_SERVER['HTTP_HOST'] . '/';
+            $vars['viewed_pages'] = $viewed_pages;
         }
 
         $header = new CommonController([
