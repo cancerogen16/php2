@@ -10,8 +10,7 @@ return [
         //
     ],
     'guest' => [
-        'register',
-        'login',
+        //
     ],
     'admin' => [
         //
