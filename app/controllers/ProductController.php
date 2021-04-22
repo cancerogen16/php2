@@ -115,6 +115,13 @@ class ProductController extends Controller
 
         $vars['product'] = $product_info;
 
+        $header = new CommonController([
+            'controller' => 'common',
+            'action' => 'header',
+        ]);
+
+        $vars['header'] = $header->headerAction();
+
         $template = 'product/product.html.twig';
 
         $this->view->display($template, $vars);
