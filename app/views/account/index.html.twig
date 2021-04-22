@@ -1,0 +1,19 @@
+{% extends "layouts/default.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="row"><div class="col">{{ message }}</div></div>
+    <div class="row">
+        <div class="col">
+            <h2>Вы недавно смотрели</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="viewed-pages">
+                <h2>Вы недавно смотрели</h2>
+            </div>
+        </div>
+    </div>
+{% endblock %}
