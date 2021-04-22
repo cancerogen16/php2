@@ -6,6 +6,13 @@ use app\core\Model;
 
 class Viewed extends Model
 {
+    public function getViewed($user_id = 0)
+    {
+        $sql = "SELECT * FROM viewed WHERE user_id = '" . (int)$user_id . "'";
+
+        return $this->db->all($sql);
+    }
+
     /**
      * @param int $user_id
      * @param string $url
