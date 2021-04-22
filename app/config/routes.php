@@ -7,6 +7,11 @@ return [
         'action' => 'index',
     ],
 
+    'account' => [
+        'controller' => 'account',
+        'action' => 'index',
+    ],
+
     'account/login' => [
         'controller' => 'account',
         'action' => 'login',
