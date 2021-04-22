@@ -8,7 +8,7 @@ class Viewed extends Model
 {
     public function getViewed($user_id = 0)
     {
-        $sql = "SELECT * FROM viewed WHERE user_id = '" . (int)$user_id . "'";
+        $sql = "SELECT * FROM viewed WHERE user_id = '" . (int)$user_id . "' ORDER BY id DESC";
 
         return $this->db->all($sql);
     }
@@ -34,6 +34,8 @@ class Viewed extends Model
         $views_count = $this->getViewsCount($user_id, $url);
 
         if ($views_count == 0) {
+            $viewed_pages = $this->getViewed($user_id);
+
             $sql = "INSERT INTO viewed (user_id, url, views) VALUES (:user_id, :url, :views)";
 
             $views_count++;
