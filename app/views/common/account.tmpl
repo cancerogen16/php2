@@ -2,7 +2,7 @@
 <div class="account">
     {% if logged %}
         <div class="login">
-            {{ username }}
+            <a href="/account?id={{ user_id }}">{{ username }}</a>
         </div>
         |
         <div class="logout">
