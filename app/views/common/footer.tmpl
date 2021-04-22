@@ -2,11 +2,14 @@
 <footer class="footer">
     <div class="container">
         <div class="row">
-            <div class="col">
-                {% block footer %}
+            {% block footer %}
+                <div class="footer__left col align-self-center">
                     <h3>{{ "now"|date("Y") }}</h3>
-                {% endblock %}
-            </div>
+                </div>
+                <div class="footer__right col align-self-center d-flex justify-content-end">
+                    <h3>PHP. Уровень 2</h3>
+                </div>
+            {% endblock %}
         </div>
     </div>
 </footer>
