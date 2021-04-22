@@ -31,16 +31,6 @@ class Router
         $url = trim($_SERVER['REQUEST_URI'], '/');
         $parts = parse_url($url);
 
-        $user = new User;
-
-        $user_id = $user->getUserId();
-
-        if ($user_id) {
-            $viewed = new Viewed;
-
-            $viewed->addView($user_id, $url);
-        }
-
         if ($parts) {
             foreach ($this->routes as $route => $params) {
                 if (preg_match($route, $parts['path'], $matches)) {
@@ -61,6 +51,19 @@ class Router
                 $action = $this->params['action'] . 'Action';
                 if (method_exists($path, $action)) {
                     $controller = new $path($this->params);
+
+                    $user = new User;
+
+                    $user_id = $user->getUserId();
+
+                    if ($user_id) {
+                        $url = trim($_SERVER['REQUEST_URI'], '/');
+
+                        $viewed = new Viewed;
+
+                        $viewed->addView($user_id, $url);
+                    }
+
                     $controller->$action();
                 } else {
                     View::errorCode(404);
