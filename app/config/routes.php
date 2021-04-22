@@ -37,4 +37,9 @@ return [
         'action' => 'product',
     ],
 
+
+    'admin' => [
+        'controller' => 'admin',
+        'action' => 'index',
+    ],
 ];
