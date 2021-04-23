@@ -2,7 +2,6 @@
 
 namespace app\models;
 
-use app\lib\Db;
 use app\core\Model;
 
 class User extends Model

@@ -2,7 +2,6 @@
 
 namespace app\core;
 
-use app\core\View;
 use app\models\User;
 use app\models\Viewed;
 

@@ -3,7 +3,6 @@
 namespace app\core;
 
 use app\models\User;
-use app\core\Router;
 
 abstract class Controller
 {
