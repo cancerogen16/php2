@@ -33,7 +33,7 @@
     {% if restProducts %}
         <div class="row more-products">
             <div class="col">
-                <a class="more-products__link btn btn-secondary" data-page="{{ page }}" href="/catalog?page={{ page }}" title="Подгрузить ещё товары">Еще</a>
+                <a class="more-products__link btn btn-secondary" data-page="{{ page }}" href="/product?product_id={{ product.product_id }}" title="Подгрузить ещё товары">Еще</a>
             </div>
         </div>
     {% endif %}

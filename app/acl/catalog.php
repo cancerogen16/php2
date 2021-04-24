@@ -2,7 +2,7 @@
 
 return [
     'all' => [
-        'product',
+        'catalog',
     ],
     'authorize' => [
         //

@@ -28,12 +28,12 @@ return [
     ],
 
     'catalog' => [
-        'controller' => 'product',
+        'controller' => 'catalog',
         'action' => 'catalog',
     ],
 
     'category' => [
-        'controller' => 'product',
+        'controller' => 'category',
         'action' => 'category',
     ],
 
