@@ -40,7 +40,7 @@ class AccountController extends Controller
     public function loginAction()
     {
         if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-            $this->view->redirect('/');
+            $this->redirect('/');
         }
 
         $vars = [
@@ -79,9 +79,9 @@ class AccountController extends Controller
                         $_SESSION["user_role"] = $user['user_role'];
 
                         if ($user['user_role'] == 'admin') {
-                            $this->view->redirect('/admin');
+                            $this->redirect('/admin');
                         } else {
-                            $this->view->redirect('/');
+                            $this->redirect('/');
                         }
 
                         exit();
@@ -115,7 +115,7 @@ class AccountController extends Controller
 
         session_destroy();
 
-        $this->view->redirect('/');
+        $this->redirect('/');
     }
 
     public function registerAction()
@@ -170,7 +170,7 @@ class AccountController extends Controller
                         $vars['username_err'] = "Не найден аккаунт с таким логином";
                     }
 
-                    $this->view->redirect('/');
+                    $this->redirect('/');
                 } else {
                     $vars['message'] = "Что-то пошло не так. Попробуйте ещё раз";
                 }

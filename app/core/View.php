@@ -36,12 +36,6 @@ class View
         $this->twig->display($template, $vars);
     }
 
-    public function redirect($url)
-    {
-        header('location: ' . $url);
-        exit;
-    }
-
     public static function errorCode($code)
     {
         http_response_code($code);
