@@ -11,6 +11,7 @@ abstract class Model
 
     public function __construct()
     {
-        $this->db = new Db;
+        $config = require 'app/config/db.php';
+        $this->db = new Db($config['host'], $config['user'], $config['password'], $config['name']);
     }
 }

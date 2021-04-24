@@ -8,6 +8,8 @@ class Product extends Model
 {
     public function getProducts($data = [])
     {
+        $products = [];
+
         $sql = "SELECT * FROM product";
 
         if (isset($data['start']) || isset($data['limit'])) {
@@ -26,20 +28,42 @@ class Product extends Model
             $sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
         }
 
-        return $this->db->all($sql);
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows) {
+            $products = $query->rows;
+        }
+
+        return $products;
     }
 
     public function getProduct($product_id = 0)
     {
-        $sql = "SELECT * FROM product WHERE product_id = $product_id";
+        $product_data = [];
 
-        return $this->db->one($sql);
+        $sql = "SELECT * FROM product WHERE product_id = '" . (int)$product_id . "'";
+
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows) {
+            $product_data = $query->row;
+        }
+
+        return $product_data;
     }
 
     public function getTotalProducts()
     {
+        $total = 0;
+
         $sql = "SELECT COUNT(*) as total FROM product";
 
-        return $this->db->one($sql)['total'];
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows) {
+            $total = $query->row['total'];
+        }
+
+        return $total;
     }
 }
