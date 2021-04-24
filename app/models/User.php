@@ -10,7 +10,6 @@ class User extends Model
 
     public $username;
     public $password;
-    public $acl;
 
     public function __construct()
     {
@@ -139,6 +138,6 @@ class User extends Model
 
     public function getUserId()
     {
-        return isset($_SESSION['user_id']) && $_SESSION['loggedin'] == true ? $_SESSION['user_id'] : 0;
+        return $this->user_id;
     }
 }
