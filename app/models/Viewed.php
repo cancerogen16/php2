@@ -6,6 +6,11 @@ use app\core\Model;
 
 class Viewed extends Model
 {
+    /**
+     * @param int $user_id
+     * @return array
+     * @throws \Exception
+     */
     public function getViewed($user_id = 0)
     {
         $viewed = [];
@@ -45,9 +50,12 @@ class Viewed extends Model
     /**
      * @param int $user_id
      * @param string $url
+     * @param string $title
      * @return int количество просмотров данной страницы данным пользователем
+     * @throws \Exception
      */
-    public function addView($user_id = 0, $url = '') {
+    public function addView($user_id = 0, $url = '', $title = '')
+    {
         $views_count = $this->getViewsCount($user_id, $url);
 
         if ($views_count == 0) {
@@ -57,13 +65,14 @@ class Viewed extends Model
                 $this->deleteViewed($viewed_pages);
             }
 
-            $sql = "INSERT INTO viewed (user_id, url, views) VALUES (:user_id, :url, :views)";
+            $sql = "INSERT INTO viewed (user_id, url, title, views) VALUES (:user_id, :url, :title, :views)";
 
             $views_count++;
 
             $this->db->query($sql, [
                 'user_id' => $user_id,
                 'url' => $url,
+                'title' => $title,
                 'views' => $views_count,
             ]);
         } else {

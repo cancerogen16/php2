@@ -15,7 +15,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>Ссылка</th>
+                        <th>Страница</th>
                         <th>Количество просмотров</th>
                     </tr>
                     </thead>
@@ -23,8 +23,8 @@
                     {% for page in viewed_pages %}
                         <tr>
                             <td>
-                                <a class="viewed-page__link" href="{{ host }}{{ page.url }}" title="{{ host }}{{ page.url }}">
-                                    {{ host }}{{ page.url }}
+                                <a class="viewed-page__link" href="{{ host }}{{ page.url }}" title="{{ page.title }}">
+                                    {{ page.title }}
                                 </a>
                             </td>
                             <td>{{ page.views }}</td>

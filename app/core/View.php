@@ -35,12 +35,12 @@ class View
 
     public function display($template, $vars = [])
     {
-        $this->addToViewed();
+        $this->addToViewed($vars['title']);
 
         $this->twig->display($template, $vars);
     }
 
-    public function addToViewed()
+    public function addToViewed($title = '')
     {
         $user = new User;
 
@@ -51,7 +51,7 @@ class View
 
             $viewed = new Viewed;
 
-            $viewed->addView($user_id, $url);
+            $viewed->addView($user_id, $url, $title);
         }
     }
 
