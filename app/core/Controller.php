@@ -18,19 +18,9 @@ abstract class Controller
     {
         $this->route = $route;
 
-        $this->view = new View($route);
-
         $this->user = new User();
 
-        $user_id = $this->user->getUserId();
-
-        if ($user_id) {
-            $url = trim($_SERVER['REQUEST_URI'], '/');
-
-            $viewed = new Viewed;
-
-            $viewed->addView($user_id, $url);
-        }
+        $this->view = new View($route);
 
         if (!$this->checkAcl()) {
             $vars = [];

@@ -2,6 +2,8 @@
 
 namespace app\core;
 
+use app\models\User;
+use app\models\Viewed;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -33,7 +35,24 @@ class View
 
     public function display($template, $vars = [])
     {
+        $this->addToViewed();
+
         $this->twig->display($template, $vars);
+    }
+
+    public function addToViewed()
+    {
+        $user = new User;
+
+        $user_id = $user->getUserId();
+
+        if ($user_id) {
+            $url = trim($_SERVER['REQUEST_URI'], '/');
+
+            $viewed = new Viewed;
+
+            $viewed->addView($user_id, $url);
+        }
     }
 
     public static function errorCode($code)
