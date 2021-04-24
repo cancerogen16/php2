@@ -28,16 +28,11 @@ class AccountController extends Controller
 
             $vars['host'] = 'http://' . $_SERVER['HTTP_HOST'] . '/';
             $vars['viewed_pages'] = $viewed_pages;
+
+            $vars['logged'] = true;
+            $vars['user_id'] = $user_id;
+            $vars['username'] = $user['username'];
         }
-
-        //$header = $this->getChild('module/' . $module['code'], $module['setting']);
-
-        $header = new CommonHeaderController([
-            'controller' => 'common',
-            'action' => 'header',
-        ]);
-
-        $vars['header'] = $header->headerAction();
 
         $template = 'account/index.html.twig';
 

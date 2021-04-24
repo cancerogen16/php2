@@ -8,7 +8,7 @@
     {% endblock %}
 </head>
 <body>
-    {{ header | raw }}
+{% include('common/header.tmpl') %}
     <div class="content">
         <div class="container">
             <div class="row">
@@ -20,6 +20,6 @@
         </div>
     </div>
     <hr>
-    {% include('common/footer.tmpl') %}
+{% include('common/footer.tmpl') %}
 </body>
 </html>

@@ -25,7 +25,7 @@ class CommonHeaderController extends Controller
             'user_id' => $user_id,
         ];
 
-        $template = 'common/header.html.twig';
+        $template = 'common/header.tmpl';
 
         return $this->view->render($template, $vars);
     }
