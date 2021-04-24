@@ -70,7 +70,7 @@ class AccountController extends Controller
             }
 
             if (empty($vars['username_err']) && empty($vars['password_err'])) {
-                $users = $this->user->getUsers($vars['username']);
+                $users = $this->user->getUsersByName($vars['username']);
 
                 if (count($users) == 1) {
                     $user = reset($users);
