@@ -30,7 +30,9 @@ class AccountController extends Controller
             $vars['viewed_pages'] = $viewed_pages;
         }
 
-        $header = new CommonController([
+        //$header = $this->getChild('module/' . $module['code'], $module['setting']);
+
+        $header = new CommonHeaderController([
             'controller' => 'common',
             'action' => 'header',
         ]);
@@ -99,7 +101,7 @@ class AccountController extends Controller
             }
         }
 
-        $header = new CommonController([
+        $header = new CommonHeaderController([
             'controller' => 'common',
             'action' => 'header',
         ]);
@@ -187,7 +189,7 @@ class AccountController extends Controller
             }
         }
 
-        $header = new CommonController([
+        $header = new CommonHeaderController([
             'controller' => 'common',
             'action' => 'header',
         ]);

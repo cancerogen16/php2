@@ -12,7 +12,7 @@ class MainController extends Controller
             'title' => 'Главная страница',
         ];
 
-        $header = new CommonController([
+        $header = new CommonHeaderController([
             'controller' => 'common',
             'action' => 'header',
         ]);

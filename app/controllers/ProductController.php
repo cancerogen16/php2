@@ -32,7 +32,7 @@ class ProductController extends Controller
 
         $vars['product'] = $product_info;
 
-        $header = new CommonController([
+        $header = new CommonHeaderController([
             'controller' => 'common',
             'action' => 'header',
         ]);

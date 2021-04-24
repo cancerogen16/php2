@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use app\core\Controller;
 
-class CommonController extends Controller
+class CommonHeaderController extends Controller
 {
     public function headerAction()
     {

@@ -12,7 +12,7 @@ class AdminController extends Controller
             'title' => 'Панель администратора',
         ];
 
-        $header = new CommonController([
+        $header = new CommonHeaderController([
             'controller' => 'common',
             'action' => 'header',
         ]);

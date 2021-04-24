@@ -70,7 +70,7 @@ class CatalogController extends Controller
         $vars['totalProducts'] = $totalProducts;
         $vars['restProducts'] = $restProducts;
 
-        $header = new CommonController([
+        $header = new CommonHeaderController([
             'controller' => 'common',
             'action' => 'header',
         ]);
