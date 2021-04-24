@@ -32,12 +32,7 @@ class ProductController extends Controller
 
         $vars['product'] = $product_info;
 
-        $header = new CommonHeaderController([
-            'controller' => 'common',
-            'action' => 'header',
-        ]);
-
-        $vars['header'] = $header->headerAction();
+        $vars['header'] = $this->getChild('CommonHeader', '');
 
         $template = 'product/product.html.twig';
 

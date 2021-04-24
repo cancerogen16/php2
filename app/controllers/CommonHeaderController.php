@@ -6,7 +6,7 @@ use app\core\Controller;
 
 class CommonHeaderController extends Controller
 {
-    public function headerAction()
+    public function index()
     {
         $logged = false;
 
@@ -26,17 +26,6 @@ class CommonHeaderController extends Controller
         ];
 
         $template = 'common/header.tmpl';
-
-        return $this->view->render($template, $vars);
-    }
-
-    public function footerAction()
-    {
-        $vars = [
-            'title' => 'footerAction',
-        ];
-
-        $template = 'common/footer.html.twig';
 
         return $this->view->render($template, $vars);
     }

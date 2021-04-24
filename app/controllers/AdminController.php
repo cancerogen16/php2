@@ -12,12 +12,7 @@ class AdminController extends Controller
             'title' => 'Панель администратора',
         ];
 
-        $header = new CommonHeaderController([
-            'controller' => 'common',
-            'action' => 'header',
-        ]);
-
-        $vars['header'] = $header->headerAction();
+        $vars['header'] = $this->getChild('CommonHeader', '');
 
         $template = 'admin/common/index.html.twig';
 

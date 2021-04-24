@@ -28,11 +28,9 @@ class AccountController extends Controller
 
             $vars['host'] = 'http://' . $_SERVER['HTTP_HOST'] . '/';
             $vars['viewed_pages'] = $viewed_pages;
-
-            $vars['logged'] = true;
-            $vars['user_id'] = $user_id;
-            $vars['username'] = $user['username'];
         }
+
+        $vars['header'] = $this->getChild('CommonHeader', '');
 
         $template = 'account/index.html.twig';
 
@@ -96,12 +94,7 @@ class AccountController extends Controller
             }
         }
 
-        $header = new CommonHeaderController([
-            'controller' => 'common',
-            'action' => 'header',
-        ]);
-
-        $vars['header'] = $header->headerAction();
+        $vars['header'] = $this->getChild('CommonHeader', '');
 
         $template = 'account/login.html.twig';
 
@@ -164,7 +157,7 @@ class AccountController extends Controller
 
             if (empty($vars['username_err']) && empty($vars['password_err']) && empty($vars['confirm_password_err'])) {
                 if ($this->user->addUser($vars['username'], $vars['password'])) {
-                    $users = $this->user->getUsers($vars['username']);
+                    $users = $this->user->getUsersByName($vars['username']);
 
                     if (count($users) == 1) {
                         $user = reset($users);
@@ -184,12 +177,7 @@ class AccountController extends Controller
             }
         }
 
-        $header = new CommonHeaderController([
-            'controller' => 'common',
-            'action' => 'header',
-        ]);
-
-        $vars['header'] = $header->headerAction();
+        $vars['header'] = $this->getChild('CommonHeader', '');
 
         $template = 'account/register.html.twig';
 

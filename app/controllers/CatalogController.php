@@ -70,12 +70,7 @@ class CatalogController extends Controller
         $vars['totalProducts'] = $totalProducts;
         $vars['restProducts'] = $restProducts;
 
-        $header = new CommonHeaderController([
-            'controller' => 'common',
-            'action' => 'header',
-        ]);
-
-        $vars['header'] = $header->headerAction();
+        $vars['header'] = $this->getChild('CommonHeader', '');
 
         $template = 'catalog/catalog.html.twig';
 
