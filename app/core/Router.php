@@ -2,9 +2,6 @@
 
 namespace app\core;
 
-use app\models\User;
-use app\models\Viewed;
-
 class Router
 {
 
@@ -50,18 +47,6 @@ class Router
                 $action = $this->params['action'] . 'Action';
                 if (method_exists($path, $action)) {
                     $controller = new $path($this->params);
-
-                    $user = new User;
-
-                    $user_id = $user->getUserId();
-
-                    if ($user_id) {
-                        $url = trim($_SERVER['REQUEST_URI'], '/');
-
-                        $viewed = new Viewed;
-
-                        $viewed->addView($user_id, $url);
-                    }
 
                     $controller->$action();
                 } else {

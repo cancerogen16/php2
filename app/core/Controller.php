@@ -3,6 +3,7 @@
 namespace app\core;
 
 use app\models\User;
+use app\models\Viewed;
 
 abstract class Controller
 {
@@ -20,6 +21,16 @@ abstract class Controller
         $this->view = new View($route);
 
         $this->user = new User();
+
+        $user_id = $this->user->getUserId();
+
+        if ($user_id) {
+            $url = trim($_SERVER['REQUEST_URI'], '/');
+
+            $viewed = new Viewed;
+
+            $viewed->addView($user_id, $url);
+        }
 
         if (!$this->checkAcl()) {
             $vars = [];
