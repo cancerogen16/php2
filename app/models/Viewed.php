@@ -8,21 +8,38 @@ class Viewed extends Model
 {
     public function getViewed($user_id = 0)
     {
+        $viewed = [];
+
         $sql = "SELECT * FROM viewed WHERE user_id = '" . (int)$user_id . "' ORDER BY id DESC";
 
-        return $this->db->all($sql);
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows) {
+            $viewed = $query->rows;
+        }
+
+        return $viewed;
     }
 
     /**
      * @param int $user_id
      * @param string $url
-     * @return mixed
+     * @return int
+     * @throws \Exception
      */
     public function getViewsCount($user_id = 0, $url = '')
     {
+        $viewsCount = 0;
+
         $sql = "SELECT * FROM viewed WHERE user_id = '" . (int)$user_id . "' AND url = '" . $url . "'";
 
-        return (int)$this->db->one($sql)['views'];
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows) {
+            $viewsCount = $query->row['views'];
+        }
+
+        return $viewsCount;
     }
 
     /**
