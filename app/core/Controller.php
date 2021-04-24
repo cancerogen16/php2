@@ -73,4 +73,24 @@ abstract class Controller
         return in_array($this->route['action'], $this->acl[$key]);
     }
 
+    protected function getChild($child, $action)
+    {
+        $result = '';
+
+        $path = 'app\controllers\\' . ucfirst($child) . 'Controller';
+
+        if (class_exists($path)) {
+            if ($action == '') {
+                $action = 'index';
+            }
+
+            if (method_exists($path, $action)) {
+                $controller = new $path($this->route);
+
+                $result = $controller->$action();
+            }
+        }
+
+        return $result;
+    }
 }
