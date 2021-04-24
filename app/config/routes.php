@@ -42,6 +42,21 @@ return [
         'action' => 'product',
     ],
 
+    'cart' => [
+        'controller' => 'checkout',
+        'action' => 'cart',
+    ],
+
+    'checkout' => [
+        'controller' => 'checkout',
+        'action' => 'checkout',
+    ],
+
+    'error/403' => [
+        'controller' => 'error',
+        'action' => 'error403',
+    ],
+
 
     'admin' => [
         'controller' => 'admin',

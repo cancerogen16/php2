@@ -23,11 +23,7 @@ abstract class Controller
         $this->view = new View($route);
 
         if (!$this->checkAcl()) {
-            $vars = [];
-
-            $template = 'errors/403.html.twig';
-
-            $this->view->display($template, $vars);
+            $this->redirect('error/403');
         }
 
         $this->model = $this->loadModel($route['controller']);
@@ -62,7 +58,7 @@ abstract class Controller
         } elseif (isset($_SESSION['admin']) and $this->isAcl('admin')) {
             return true;
         }
-        
+
         return false;
     }
 
