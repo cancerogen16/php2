@@ -13,7 +13,7 @@ final class Db
 
     private function __construct()
     {
-        $config = require 'app/config/db.php';
+        $config = require dirname(__DIR__) . DS .'config' . DS . 'db.php';
 
         $hostname = $config['host'];
         $port = '3306';
