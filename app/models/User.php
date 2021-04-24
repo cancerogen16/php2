@@ -12,12 +12,20 @@ class User extends Model
     public $password;
     public $acl;
 
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->user_id = isset($_SESSION['user_id']) && $_SESSION['loggedin'] == true ? $_SESSION['user_id'] : 0;
+    }
+
     /**
      * Определение пользователя по роли в сессии
      *
      * @return bool
      */
-    public function isAdmin(): bool {
+    public function isAdmin(): bool
+    {
         return isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin' ? true : false;
     }
 
@@ -26,44 +34,53 @@ class User extends Model
      *
      * @return bool
      */
-    public function isLogged(): bool {
+    public function isLogged(): bool
+    {
         return isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true ? true : false;
     }
 
     /**
      * Найден пользователь в базе по имени
      *
-     * @param  string $username
+     * @param string $username
      * @return bool
      */
-    public function existUser($username): bool {
+    public function existUser($username): bool
+    {
+        $userExist = false;
+
         $sql = "SELECT user_id FROM user WHERE username = '$username'";
 
-        $results = $this->db->all($sql);
+        $query = $this->db->query($sql);
 
-        return (count($results) == 1) ? false : true;
+        if ($query->num_rows) {
+            $userExist = true;
+        }
+
+        return $userExist;
     }
 
     /**
      * Добавление пользователя в базу
      *
-     * @param  string $username
-     * @param  string $password
+     * @param string $username
+     * @param string $password
      * @return int insert_id
      */
-    public function addUser($username, $password) {
+    public function addUser($username, $password)
+    {
         $ip = $_SERVER['REMOTE_ADDR'];
 
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
         $sql = "SELECT * FROM user"; // получение из базы всех пользователей
 
-        $results = $this->db->all($sql);
+        $query = $this->db->query($sql);
 
-        if (count($results) == 0) { // если пользователь первый
-            $user_role = 'admin';
-        } else {
+        if ($query->num_rows) {
             $user_role = 'customer';
+        } else { // если пользователь первый
+            $user_role = 'admin';
         }
 
         $sql = "INSERT INTO user (username, password, user_role, ip) VALUES (:username, :password, :user_role, :ip)";
@@ -81,28 +98,47 @@ class User extends Model
     /**
      * Получение пользователей из базы по имени
      *
-     * @param  string $username
+     * @param string $username
      * @return array
      */
-    public function getUsers($username) {
+    public function getUsersByName($username)
+    {
+        $users = [];
+
         $sql = "SELECT * FROM user WHERE username = '$username'";
 
-        return $this->db->all($sql);
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows) {
+            $users = $query->rows;
+        }
+
+        return $users;
     }
 
     /**
      * Получение данных пользователя из базы по его ID
      *
-     * @param  int $user_id
+     * @param int $user_id
      * @return array
      */
-    public function getUser($user_id = 0) {
+    public function getUser($user_id = 0)
+    {
+        $userData = [];
+
         $sql = "SELECT * FROM user WHERE user_id = '" . (int)$user_id . "'";
 
-        return $this->db->one($sql);
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows) {
+            $userData = $query->row;
+        }
+
+        return $userData;
     }
 
-    public function getUserId() {
+    public function getUserId()
+    {
         return isset($_SESSION['user_id']) && $_SESSION['loggedin'] == true ? $_SESSION['user_id'] : 0;
     }
 }
