@@ -38,14 +38,14 @@
                                         {% endif %}
                                     </td>
                                     <td class="price">{{ product.price }}</td>
-                                    <td class="quantity">
+                                    <td class="quantity quantity-{{ product.product_id }}" data-id="{{ product.product_id }}">
                                         <div class="quantity-inner">
                                             <div class="quantity-btns">
-                                                <a class="btn quantity-btn plus" href="/" title="Добавить" data-id="{{ product.product_id }}">+</a>
-                                                <a class="btn quantity-btn minus" href="/" title="Убавить" data-id="{{ product.product_id }}">-</a>
+                                                <a class="btn quantity-btn plus" href="/" title="Добавить">+</a>
+                                                <a class="btn quantity-btn minus" href="/" title="Убавить">-</a>
                                             </div>
                                             <div class="quantity-input">
-                                                <input type="text" value="{{ product.quantity }}" size="2" class="quantity-value" data-id="{{ product.product_id }}">
+                                                <input type="text" value="{{ product.quantity }}" size="2" class="quantity-value">
                                             </div>
                                         </div>
                                     </td>

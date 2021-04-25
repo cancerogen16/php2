@@ -105,4 +105,35 @@ class Cart extends Model
 
         return $this->db->countAffected();
     }
+
+    public function changeQuantity($product_id, $quantity, $user_id)
+    {
+        if ($user_id) {
+            $sql = "SELECT * FROM cart WHERE user_id = '" . (int)$user_id . "'";
+        } else {
+            $sql = "SELECT * FROM cart WHERE session_id = '" . session_id() . "'";
+        }
+
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows) {
+            $cart = $query->row;
+
+            $cart_id = (int)$cart['cart_id'];
+
+            $products = json_decode($cart['products'], true);
+
+            if ($products) {
+                if (isset($products[$product_id])) {
+                    $products[$product_id] = $quantity;
+                }
+            }
+
+            $sql = "UPDATE `cart` SET products = '" . json_encode($products) . "' WHERE cart_id = '" . $cart_id . "'";
+
+            $this->db->query($sql);
+        }
+
+        return $this->db->countAffected();
+    }
 }

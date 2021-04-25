@@ -73,6 +73,62 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    function changeQuantity(product_id, quantity) {
+        $.ajax({
+            type: "POST",
+            url: "/checkout/changeQuantity",
+            data: { product_id: product_id, quantity: quantity },
+            dataType: "json"
+        }).done(function(json) {
+            if (json['success']) {
+                $('.quantity-'+product_id+' .quantity-value').val(quantity);
+                alert('Количество товара изменено');
+                return quantity;
+            } else {
+                alert('Ошибка изменения количества товара');
+                return false;
+            }
+        });
+    }
+
+    $('.quantity-btn').click(function(e) {
+        e.preventDefault();
+        const $quantity = $(this).closest('.quantity');
+        const product_id = $quantity.data('id');
+
+        let action = 'minus';
+
+        if ($(this).hasClass('plus')) {
+            action = 'plus';
+        }
+
+        const quantity = parseInt($quantity.find('.quantity-value').val());
+
+        let newQuantity = quantity;
+
+        if (action === 'plus') {
+            newQuantity++;
+        } else
+        if (action === 'minus' && quantity > 1) {
+            newQuantity--;
+        }
+
+        if (newQuantity !== quantity) {
+            changeQuantity(product_id, newQuantity);
+        }
+    });
+
+    $('.quantity-value').blur(function(e) {
+        const $quantity = $(this).closest('.quantity');
+        const product_id = $quantity.data('id');
+
+        const quantity = parseInt($quantity.find('.quantity-value').val());
+
+        if (quantity > 0) {
+            changeQuantity(product_id, quantity);
+        }
+    });
 });
 
 function formatPrice(price) {

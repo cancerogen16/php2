@@ -171,3 +171,36 @@ td.action{
   margin:15px 0;
   text-align:center;
 }
+.quantity-inner{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+}
+.quantity-btns{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  flex-direction:column;
+}
+.quantity-btn{
+  width: 36px;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #98949421;
+  text-align: center;
+  padding: 5px;
+  line-height: 1;
+  height: 36px;
+  border-color: #555;
+}
+.quantity-input{
+  margin:10px;
+}
+.quantity-value{
+  font-size:16px;
+  text-align:right;
+  padding:5px;
+}
+.user-section{
+  max-width:480px;
+}

@@ -57,6 +57,11 @@ return [
         'action' => 'cartAdd',
     ],
 
+    'checkout/changeQuantity' => [
+        'controller' => 'checkout',
+        'action' => 'changeQuantity',
+    ],
+
     'error/403' => [
         'controller' => 'error',
         'action' => 'error403',

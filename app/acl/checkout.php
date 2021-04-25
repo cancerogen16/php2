@@ -5,6 +5,7 @@ return [
         'cart',
         'checkout',
         'cartAdd',
+        'changeQuantity',
     ],
     'authorize' => [
         //
