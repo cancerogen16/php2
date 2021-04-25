@@ -51,7 +51,7 @@
                                     </td>
                                     <td class="price">{{ product.total }}</td>
                                     <td class="action">
-                                        <a class="btn btn-danger" href="/cart?removeFromCart=1&product_id={{ product.product_id }}" title="Удалить">Удалить</a>
+                                        <a class="btn btn-danger removeFromCart" href="/" data-id="{{ product.product_id }}" data-route="checkout" title="Удалить из корзины">Удалить</a>
                                     </td>
                                 </tr>
                             {% endfor %}

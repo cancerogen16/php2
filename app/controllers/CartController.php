@@ -66,7 +66,7 @@ class CartController extends Controller
     public function removeFromCartAction()
     {
         $vars = [
-            'title' => 'Оформление заказа',
+            'title' => 'Удаление товара',
         ];
 
         $product_id = (int)filter_input(INPUT_POST, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);

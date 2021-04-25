@@ -4,6 +4,7 @@ return [
     'all' => [
         'checkout',
         'changeQuantity',
+        'removeFromCart',
     ],
     'authorize' => [
         //
