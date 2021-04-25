@@ -33,30 +33,35 @@ class CheckoutController extends Controller
 
         $vars['cart_products'] = [];
 
-        foreach ($cart['products'] as $product_id => $quantity) {
-            $product = $productModel->getProduct($product_id);
+        if (!empty($cart['products'])) {
+            foreach ($cart['products'] as $product_id => $quantity) {
+                $product = $productModel->getProduct($product_id);
 
-            $total += $quantity * $product['price'];
+                $total += $quantity * $product['price'];
 
-            if ($product['image']) {
-                $image = resize($product['image'], $image_product_width, $image_product_height);
-            } else {
-                $image = resize('noimage.jpg', $image_product_width, $image_product_height);
+                if ($product['image']) {
+                    $image = resize($product['image'], $image_product_width, $image_product_height);
+                } else {
+                    $image = resize('noimage.jpg', $image_product_width, $image_product_height);
+                }
+
+                $product['thumb'] = $image;
+
+                $product['quantity'] = $quantity;
+                $product['totalSum'] = (float)$product['price'] * $quantity;
+                $product['total'] = priceFormat((float)$product['price'] * $quantity);
+                $product['priceSum'] = $product['price'];
+                $product['price'] = priceFormat($product['price']);
+
+                $vars['cart_products'][] = $product;
+
+                $count++;
             }
 
-            $product['thumb'] = $image;
-
-            $product['quantity'] = $quantity;
-            $product['total'] = priceFormat((float)$product['price'] * $quantity);
-            $product['price'] = priceFormat($product['price']);
-
-            $vars['cart_products'][] = $product;
-
-            $count++;
+            $vars['count'] = $count;
+            $vars['totalSum'] = $cart['total'];
+            $vars['total'] = priceFormat($total);
         }
-
-        $vars['count'] = $count;
-        $vars['total'] = priceFormat($total);
 
         $vars['username'] = $vars['phone'] = $vars['address'] = "";
         $vars['username_err'] = $vars['phone_err'] = $vars['address_err'] = "";
@@ -83,9 +88,6 @@ class CheckoutController extends Controller
             if (empty($vars['username_err']) && empty($vars['phone_err']) && empty($vars['address_err'])) {
                 $vars['order_status_id'] = '2'; // В обработке
 
-                $vars['count'] = $cart['count'];
-                $vars['total'] = $cart['total'];
-
                 $orderModel = new Order;
 
                 $order_id = $orderModel->addOrder($vars);
@@ -93,7 +95,7 @@ class CheckoutController extends Controller
                 if ($order_id) {
                     $cartModel->delete($cart['cart_id']);
 
-                    $this->redirect('/');
+                    $this->redirect('main/index');
                 }
             }
         }
