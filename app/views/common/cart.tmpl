@@ -1,17 +1,17 @@
 <!-- begin: cart.tmpl -->
-<div class="header-cart">
-    <a class="cart__link" href="/cart">Корзина ( {{ cart.count }} )</a>
+<div class="header-cart dropdown">
+    <a class="cart__link dropdown-toggle" id="dropdownCart" href="/cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Корзина ( {{ cart.count }} )</a>
     {% if cart_products %}
-        <div class="cart-content">
+        <div class="dropdown-menu cart-content" aria-labelledby="dropdownCart">
             <table>
                 <tbody>
                 {% for product in cart_products %}
                     <tr>
                         <td><img src="/public/img/{{ product.thumb }}" alt="{{ product.name }}" width="24"></td>
-                        <td><a class="cart__link" href="/product?product_id={{ product.product_id }}">{{ product.name }}</a>
+                        <td><a class="cart-content__link" href="/product?product_id={{ product.product_id }}">{{ product.name }}</a>
                         </td>
                         <td class="price">{{ product.price }}</td>
-                        <td><?= $product['quantity'] ?></td>
+                        <td>{{ product.quantity }}</td>
                         <td class="price">{{ product.total }}</td>
                     </tr>
                 {% endfor %}
@@ -24,8 +24,13 @@
                 </tr>
                 </tfoot>
             </table>
-            <div class="checkout-button">
-                <a class="btn btn-primary" href="/checkout">Оформить заказ</a>
+            <div class="checkout-buttons d-flex">
+                <div class="checkout-button col align-self-center">
+                    <a class="btn btn-secondary" href="/cart">Просмотр корзины</a>
+                </div>
+                <div class="checkout-button col align-self-centerjustify-content-end">
+                    <a class="btn btn-primary" href="/checkout">Оформить заказ</a>
+                </div>
             </div>
         </div>
     {% endif %}

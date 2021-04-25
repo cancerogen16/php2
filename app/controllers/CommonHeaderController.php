@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\core\Controller;
+use app\models\Cart;
 
 class CommonHeaderController extends Controller
 {
@@ -12,6 +13,9 @@ class CommonHeaderController extends Controller
 
         $username = '';
         $user_id = 0;
+
+        $vars['cart'] = [];
+        $vars['cart_products'] = [];
 
         if (!empty($_SESSION["username"])) {
             $logged = true;
@@ -24,6 +28,13 @@ class CommonHeaderController extends Controller
             'username' => $username,
             'user_id' => $user_id,
         ];
+
+        $cartModel = new Cart;
+
+        if ($cart = $cartModel->getCart($user_id)) {
+            $vars['cart'] = $cart;
+            $vars['cart_products'] = $cart['products'];
+        }
 
         $template = 'common/header.tmpl';
 

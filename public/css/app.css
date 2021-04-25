@@ -155,16 +155,10 @@ td.action{
 }
 .cart-content{
   background:white;
-  display:none;
   font-size:80%;
-  margin-top:5px;
-  padding:10px 10px 0 10px;
-  position:absolute;
+  padding:10px;
   -webkit-box-shadow:1px 1px 3px 1px #999999;
   box-shadow:1px 1px 3px 1px #999999;
-}
-.header-cart:hover .cart-content{
-  display:block;
 }
 .cart-content table{
   border-collapse:collapse;
@@ -176,6 +170,7 @@ td.action{
   border:1px solid #f1f1f1;
   padding:5px 10px;
 }
-.order-button{
+.checkout-button{
   margin:15px 0;
+  text-align:center;
 }
