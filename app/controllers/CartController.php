@@ -80,6 +80,8 @@ class CartController extends Controller
         $product_info = $productModel->getProduct($product_id);
 
         if ($product_info) {
+            require_once DIR_HELPERS . 'tools.php';
+
             $quantity = (int)filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_SPECIAL_CHARS);
 
             $user_id = $this->user->getUserId();
@@ -88,25 +90,44 @@ class CartController extends Controller
 
             $result = $cartModel->add($product_id, $quantity, $user_id);
 
+            $products = [];
+
             $cart = $cartModel->getCart($user_id);
 
-            foreach ($cart['products'] as $product_id => $quantity) {
-                $product = $productModel->getProduct($product_id);
+            if (!empty($cart['products'])) {
+                $image_product_width = 40;
+                $image_product_height = 40;
 
-                $total += $quantity * $product['price'];
+                foreach ($cart['products'] as $product_id => $quantity) {
+                    $product = $productModel->getProduct($product_id);
 
-                $product['quantity'] = $quantity;
-                $product['total'] = priceFormat((float)$product['price'] * $quantity);
-                $product['price'] = priceFormat($product['price']);
+                    $total += $quantity * $product['price'];
 
-                $count++;
+                    if ($product['image']) {
+                        $image = resize($product['image'], $image_product_width, $image_product_height);
+                    } else {
+                        $image = resize('noimage.jpg', $image_product_width, $image_product_height);
+                    }
+
+                    $product['thumb'] = $image;
+
+                    $product['quantity'] = $quantity;
+                    $product['totalSum'] = (float)$product['price'] * $quantity;
+                    $product['total'] = priceFormat((float)$product['price'] * $quantity);
+                    $product['priceSum'] = $product['price'];
+                    $product['price'] = priceFormat($product['price']);
+
+                    $products[] = $product;
+
+                    $count++;
+                }
             }
 
             $json = [
                 'success' => '1',
-                'products' => $cart['products'],
+                'products' => $products,
                 'count' => $count,
-                'total' => $total,
+                'total' => priceFormat($total),
             ];
         }
 
