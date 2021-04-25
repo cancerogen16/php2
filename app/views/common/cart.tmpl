@@ -1,8 +1,8 @@
 <!-- begin: cart.tmpl -->
 <div class="header-cart dropdown">
     <a class="cart__link {% if cart_products %}dropdown-toggle{% endif %}" id="dropdownCart" href="/cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Корзина ( {{ count }} )</a>
-    {% if cart_products %}
-        <div class="dropdown-menu cart-content" aria-labelledby="dropdownCart">
+    <div class="dropdown-menu cart-content" aria-labelledby="dropdownCart">
+        {% if cart_products %}
             <table>
                 <tbody>
                 {% for product in cart_products %}
@@ -32,7 +32,9 @@
                     <a class="btn btn-primary" href="/checkout">Оформить заказ</a>
                 </div>
             </div>
-        </div>
-    {% endif %}
+        {% else %}
+            Корзина пуста
+        {% endif %}
+    </div>
 </div>
 <!-- end: cart.tmpl -->
