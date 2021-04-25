@@ -1,0 +1,27 @@
+<!-- begin: header.tmpl -->
+<header class="header">
+    <div class="container">
+        <div class="row">
+            <div class="header-row__left col-8 align-self-center">
+                <ul class="nav menu">
+                    <li class="nav-item menu__item">
+                        <a class="nav-link menu__link home-link active" aria-current="page" href="/">Фронтенд</a>
+                    </li>
+                    <li class="nav-item menu__item">
+                        <a class="nav-link menu__link" href="/admin/catalog">Редактирование каталога товаров</a>
+                    </li>
+                    <li class="nav-item menu__item">
+                        <a class="nav-link menu__link" href="/admin/orders">Редактирование заказов</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-row__right col-4 align-self-center d-flex justify-content-end">
+                <div class="account-wrap">
+                    {% include('common/account.tmpl') %}
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- end: header.tmpl -->
+

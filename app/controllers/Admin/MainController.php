@@ -12,7 +12,7 @@ class MainController extends Controller
             'title' => 'Панель администратора',
         ];
 
-        $vars['header'] = $this->getChild('CommonHeader', '');
+        $vars['header'] = $this->getChild('Admin/CommonHeader', '');
 
         $template = 'admin/common/index.html.twig';
 
