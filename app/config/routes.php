@@ -47,7 +47,7 @@ return [
         'action' => 'cart',
     ],
 
-    'checkout/cartAdd' => [
+    'cart/cartAdd' => [
         'controller' => 'cart',
         'action' => 'cartAdd',
     ],
