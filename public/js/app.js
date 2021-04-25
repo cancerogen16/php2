@@ -23,6 +23,31 @@ jQuery(document).ready(function ($) {
 
     $(".validate").validate();
 
+    function getCartContent(json) {
+        let headerCart = '';
+
+        if (json['products']) {
+            headerCart += '<table><tbody>';
+            for (const key in json['products']) {
+                if (Object.hasOwnProperty.call(json['products'], key)) {
+                    const product = json['products'][key];
+                    headerCart += '<tr>';
+                    headerCart += '<td><img src="img/' + product.image + '" alt="' + product.name + '" width="24"></td>';
+                    headerCart += '<td><a class="cart__link" href="/product.php?product_id=' + product.product_id + '">' + product.name + '</a></td>';
+                    headerCart += '<td class="price">' + product.price + '</td>';
+                    headerCart += '<td>' + product.quantity + '</td>';
+                    headerCart += '<td class="price">' + product.total + '</td>';
+                    headerCart += '</tr>';
+                }
+            }
+            headerCart += '</tbody><tfoot>';
+            headerCart += '<tr><td colspan="3">Итого</td><td>' + json.count + '</td><td class="price">' + json.total + '</td></tr>';
+            headerCart += '</tfoot></table>';
+        }
+
+        return headerCart;
+    }
+
     $('.addToCart').click(function(e) {
         e.preventDefault();
         const product_id = $(this).data('id');
@@ -43,28 +68,7 @@ jQuery(document).ready(function ($) {
 
                 $('.header-cart .cart__link').html('Корзина (' + json['count'] + ')');
 
-                let headerCart = '';
-
-                if (json['products']) {
-                    headerCart += '<table><tbody>';
-                    for (const key in json['products']) {
-                        if (Object.hasOwnProperty.call(json['products'], key)) {
-                            const product = json['products'][key];
-                            headerCart += '<tr>';
-                            headerCart += '<td><img src="img/' + product.image + '" alt="' + product.name + '" width="24"></td>';
-                            headerCart += '<td><a class="cart__link" href="/product.php?product_id=' + product.product_id + '">' + product.name + '</a></td>';
-                            headerCart += '<td class="price">' + product.price + '</td>';
-                            headerCart += '<td>' + product.quantity + '</td>';
-                            headerCart += '<td class="price">' + product.total + '</td>';
-                            headerCart += '</tr>';
-                        }
-                    }
-                    headerCart += '</tbody><tfoot>';
-                    headerCart += '<tr><td colspan="3">Итого</td><td>' + json.count + '</td><td class="price">' + json.total + '</td></tr>';
-                    headerCart += '</tfoot></table>';
-                }
-
-                $('.header-cart').find('table').replaceWith(headerCart);
+                $('.header-cart').find('table').replaceWith(getCartContent(json));
 
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
             }
@@ -73,8 +77,6 @@ jQuery(document).ready(function ($) {
 
     function changeQuantity(product_id, quantity) {
         const $container = $('body').find('.cart-section');
-        const w = parseFloat($container.css('width'));
-        const imgSrc = '/public/img/loading.gif';
         $.ajax({
             url: "/checkout/changeQuantity?product_id=" + product_id+"&quantity=" + quantity,
             beforeSend: function (xhr) {
@@ -86,6 +88,8 @@ jQuery(document).ready(function ($) {
                 const $html = $(html);
                 const cartSection = $html.find('.cart-section').html();
                 $container.replaceWith('<div class="cart-section">'+cartSection+'</div>');
+                $('.header-cart .cart__link').html('Корзина (' + json['count'] + ')');
+                $('.header-cart').find('table').replaceWith(getCartContent(json));
             });
     }
 
@@ -125,6 +129,36 @@ jQuery(document).ready(function ($) {
         if (quantity > 0) {
             changeQuantity(product_id, quantity);
         }
+    });
+
+    $(document).on('click', '.removeFromCart', function (e) {
+        e.preventDefault();
+
+        const product_id = $(this).data('id');
+        const route = $(this).data('route');
+
+        const $container = $('body').find('.cart-section');
+
+        $.ajax({
+            type: "POST",
+            url: "/"+route+"/removeFromCart",
+            data: { product_id: product_id },
+            dataType: "json",
+            beforeSend: function (xhr) {
+                $container.css({opacity:0.5});
+            }
+        }).done(function(json) {
+            if (json['success']) {
+                $container.css({opacity:1});
+                if (json['pageCart']) {
+                    const $html = $(json['pageCart']);
+                    const cartSection = $html.find('.cart-section').html();
+                    $container.replaceWith('<div class="cart-section">'+cartSection+'</div>');
+                }
+                $('.header-cart .cart__link').html('Корзина (' + json['count'] + ')');
+                $('.header-cart').find('table').replaceWith(getCartContent(json));
+            }
+        });
     });
 });
 

@@ -39,7 +39,7 @@
                                 <td class="quantity">{{ product.quantity }}</td>
                                 <td class="price">{{ product.total }}</td>
                                 <td class="action">
-                                    <a class="btn btn-danger" href="cart.php?removeFromCart=1&product_id=<?= $product['product_id'] ?>" title="Удалить">Удалить</a>
+                                    <a class="btn btn-danger removeFromCart" href="/" data-id="{{ product.product_id }}" data-route="cart" title="Удалить из корзины">Удалить</a>
                                 </td>
                             </tr>
                         {% endfor %}

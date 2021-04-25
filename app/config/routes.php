@@ -52,6 +52,11 @@ return [
         'action' => 'cartAdd',
     ],
 
+    'cart/removeFromCart' => [
+        'controller' => 'cart',
+        'action' => 'removeFromCart',
+    ],
+
     'checkout' => [
         'controller' => 'checkout',
         'action' => 'checkout',
