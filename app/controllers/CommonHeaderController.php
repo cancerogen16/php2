@@ -32,43 +32,47 @@ class CommonHeaderController extends Controller
 
         $cartModel = new Cart;
 
+        $count = 0;
+        $total = 0;
+
+        $vars['cart_products'] = [];
+        $vars['count'] = 0;
+        $vars['total'] = '';
+
         if ($cart = $cartModel->getCart($user_id)) {
-            $image_product_width = 50;
-            $image_product_height = 50;
+            if (!empty($cart['products'])) {
+                $image_product_width = 50;
+                $image_product_height = 50;
 
-            require_once DIR_HELPERS . 'tools.php';
+                require_once DIR_HELPERS . 'tools.php';
 
-            $productModel = new Product;
+                $productModel = new Product;
 
-            $count = 0;
-            $total = 0;
+                foreach ($cart['products'] as $product_id => $quantity) {
+                    $product = $productModel->getProduct($product_id);
 
-            $vars['cart_products'] = [];
+                    $total += $quantity * $product['price'];
 
-            foreach ($cart['products'] as $product_id => $quantity) {
-                $product = $productModel->getProduct($product_id);
+                    if ($product['image']) {
+                        $image = resize($product['image'], $image_product_width, $image_product_height);
+                    } else {
+                        $image = resize('noimage.jpg', $image_product_width, $image_product_height);
+                    }
 
-                $total += $quantity * $product['price'];
+                    $product['thumb'] = $image;
 
-                if ($product['image']) {
-                    $image = resize($product['image'], $image_product_width, $image_product_height);
-                } else {
-                    $image = resize('noimage.jpg', $image_product_width, $image_product_height);
+                    $product['quantity'] = $quantity;
+                    $product['total'] = priceFormat((float)$product['price'] * $quantity);
+                    $product['price'] = priceFormat($product['price']);
+
+                    $vars['cart_products'][] = $product;
+
+                    $count++;
                 }
 
-                $product['thumb'] = $image;
-
-                $product['quantity'] = $quantity;
-                $product['total'] = priceFormat((float)$product['price'] * $quantity);
-                $product['price'] = priceFormat($product['price']);
-
-                $vars['cart_products'][] = $product;
-
-                $count++;
+                $vars['count'] = $count;
+                $vars['total'] = priceFormat($total);
             }
-
-            $vars['count'] = $count;
-            $vars['total'] = priceFormat($total);
         }
 
         $template = 'common/header.tmpl';
