@@ -47,7 +47,15 @@ abstract class Controller
 
     public function checkAcl()
     {
-        $this->acl = require dirname(__DIR__) . DS .'acl' . DS . $this->route['controller'] . '.php';
+        $parts = explode('/', $this->route['controller']);
+
+        $route = '';
+
+        foreach ($parts as $part) {
+            $route .= DS . $part;
+        }
+
+        $this->acl = require dirname(__DIR__) . DS .'acl' . $route . '.php';
 
         if ($this->isAcl('all')) {
             return true;
@@ -55,7 +63,7 @@ abstract class Controller
             return true;
         } elseif (!isset($_SESSION['loggedin']) and $this->isAcl('guest')) {
             return true;
-        } elseif (isset($_SESSION['admin']) and $this->isAcl('admin')) {
+        } elseif (isset($_SESSION['user_role']) and ($_SESSION['user_role'] == 'admin') and $this->isAcl('admin')) {
             return true;
         }
 
