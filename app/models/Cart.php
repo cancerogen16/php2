@@ -106,6 +106,15 @@ class Cart extends Model
         return $this->db->countAffected();
     }
 
+    public function delete($cart_id)
+    {
+        $sql = "DELETE FROM cart WHERE cart_id = '" . (int)$cart_id . "'";
+
+        $this->db->query($sql);
+
+        return $this->db->countAffected();
+    }
+
     public function changeQuantity($product_id, $quantity, $user_id)
     {
         if ($user_id) {
