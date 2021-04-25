@@ -1,6 +1,6 @@
 <!-- begin: cart.tmpl -->
 <div class="header-cart dropdown">
-    <a class="cart__link dropdown-toggle" id="dropdownCart" href="/cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Корзина ( {{ count }} )</a>
+    <a class="cart__link {% if cart_products %}dropdown-toggle{% endif %}" id="dropdownCart" href="/cart" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Корзина ( {{ count }} )</a>
     {% if cart_products %}
         <div class="dropdown-menu cart-content" aria-labelledby="dropdownCart">
             <table>
