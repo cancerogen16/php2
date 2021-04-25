@@ -3,9 +3,105 @@
 {% block content %}
     <div class="row">
         <div class="col-12">
-            <div class="description">
-                {{ description | raw }}
-            </div>
+            <form action="" method="post">
+                <div class="cart-section">
+                    <h3>Список товаров в корзине</h3>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Наименование</th>
+                            <th>Изображение</th>
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            <th>Всего</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if products %}
+                            {% for product in products %}
+                                <tr>
+                                    <td class="number">
+                                        {{ loop.index }}
+                                    </td>
+                                    <td class="name">
+                                        <a href="/product?product_id={{ product.product_id }}" title="{{ product.name }}">
+                                            {{ product.name }}
+                                        </a>
+                                    </td>
+                                    <td class="image">
+                                        {% if product.thumb %}
+                                            <img class="cart-image" src="public/img/{{ product.thumb }}" alt="{{ product.name }}">
+                                        {% else %}
+                                            Нет изображения
+                                        {% endif %}
+                                    </td>
+                                    <td class="price">{{ product.price }}</td>
+                                    <td class="quantity">
+                                        <div class="quantity-inner">
+                                            <div class="quantity-btns">
+                                                <a class="btn quantity-btn plus" href="/" title="Добавить" data-id="{{ product.product_id }}">+</a>
+                                                <a class="btn quantity-btn minus" href="/" title="Убавить" data-id="{{ product.product_id }}">-</a>
+                                            </div>
+                                            <div class="quantity-input">
+                                                <input type="text" value="{{ product.quantity }}" size="2" class="quantity-value" data-id="{{ product.product_id }}">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="price">{{ product.total }}</td>
+                                    <td class="action">
+                                        <a class="btn btn-danger" href="/cart?removeFromCart=1&product_id={{ product.product_id }}" title="Удалить">Удалить</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="10">Нет товаров в корзине</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                        <tfoot>
+                        {% if products %}
+                            <tr>
+                                <td colspan="4">Итого</td>
+                                <td class="quantity">{{ count }}</td>
+                                <td class="price">{{ total }}</td>
+                                <td colspan="2"></td>
+                            </tr>
+                        {% endif %}
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="user-section">
+                    <h3>Данные для заказа</h3>
+                    <div class="table">
+                        <div class="form-group {% if username_err %}has-error{% endif %}">
+                            <label>Имя</label>
+                            <input type="text" name="username" class="form-control" value="{{ username }}" placeholder="Имя">
+                            <span class="field-error">{{ username_err }}</span>
+                        </div>
+
+                        <div class="form-group {% if phone_err %}has-error{% endif %}">
+                            <label>Телефон</label>
+                            <input type="text" name="phone" class="form-control" value="{{ phone }}" placeholder="Телефон">
+                            <span class="field-error">{{ phone_err }}</span>
+                        </div>
+
+                        <div class="form-group {% if address_err %}has-error{% endif %}">
+                            <label>Адрес</label>
+                            <input type="text" name="address" class="form-control" value="{{ address }}" placeholder="Адрес">
+                            <span class="field-error">{{ address_err }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-btns d-flex justify-content-between">
+                    <a class="btn btn-secondary" href="/catalog" title="Продолжить покупки">Продолжить покупки</a>
+                    {% if products %}
+                    <button type="submit" class="btn btn-primary" name="order" title="Подтверждение заказа">Подтверждение заказа</button>
+                    {% endif %}
+                </div>
+            </form>
         </div>
     </div>
 {% endblock %}
