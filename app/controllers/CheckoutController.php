@@ -95,7 +95,7 @@ class CheckoutController extends Controller
                 if ($order_id) {
                     $cartModel->delete($cart['cart_id']);
 
-                    $this->redirect('main/index');
+                    $this->redirect('/');
                 }
             }
         }
