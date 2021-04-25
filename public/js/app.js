@@ -126,14 +126,15 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $('.quantity-value').blur(function(e) {
+    $(document).on('blur', '.quantity-value', function (e) {
+        e.preventDefault();
         const $quantity = $(this).closest('.quantity');
         const product_id = $quantity.data('id');
 
-        const quantity = parseInt($quantity.find('.quantity-value').val());
+        const newQuantity = parseInt($quantity.find('.quantity-value').val());
 
-        if (quantity > 0) {
-            changeQuantity(product_id, quantity);
+        if (newQuantity > 0) {
+            changeQuantity(product_id, newQuantity);
         }
     });
 
