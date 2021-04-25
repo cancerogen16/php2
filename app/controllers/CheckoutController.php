@@ -38,11 +38,11 @@ class CheckoutController extends Controller
 
             $user_id = $this->user->getUserId();
 
-            $cart = new Cart;
+            $cartModel = new Cart;
 
-            $result = $cart->add($product_id, $quantity, $user_id);
+            $result = $cartModel->add($product_id, $quantity, $user_id);
 
-            $cart = $cart->getCart($user_id);
+            $cart = $cartModel->getCart($user_id);
 
             $count = 0;
             $total = 0;
