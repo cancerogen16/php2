@@ -75,24 +75,24 @@ jQuery(document).ready(function ($) {
     });
 
     function changeQuantity(product_id, quantity) {
+        const $container = $('body').find('.cart-section');
+        const w = parseFloat($container.css('width'));
+        const imgSrc = '/public/img/loading.gif';
         $.ajax({
-            type: "POST",
-            url: "/checkout/changeQuantity",
-            data: { product_id: product_id, quantity: quantity },
-            dataType: "json"
-        }).done(function(json) {
-            if (json['success']) {
-                $('.quantity-'+product_id+' .quantity-value').val(quantity);
-                alert('Количество товара изменено');
-                return quantity;
-            } else {
-                alert('Ошибка изменения количества товара');
-                return false;
+            url: "/checkout/changeQuantity?product_id=" + product_id+"&quantity=" + quantity,
+            beforeSend: function (xhr) {
+                $container.css({opacity:0.5});
             }
-        });
+        })
+            .done(function (html) {
+                $container.css({opacity:1});
+                const $html = $(html);
+                const cartSection = $html.find('.cart-section').html();
+                $container.replaceWith('<div class="cart-section">'+cartSection+'</div>');
+            });
     }
 
-    $('.quantity-btn').click(function(e) {
+    $(document).on('click', '.quantity-btn', function (e) {
         e.preventDefault();
         const $quantity = $(this).closest('.quantity');
         const product_id = $quantity.data('id');

@@ -2,8 +2,8 @@
 
 return [
     'all' => [
-        'checkout',
-        'changeQuantity',
+        'cart',
+        'cartAdd',
     ],
     'authorize' => [
         //

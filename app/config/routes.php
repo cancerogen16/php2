@@ -43,18 +43,18 @@ return [
     ],
 
     'cart' => [
-        'controller' => 'checkout',
+        'controller' => 'cart',
         'action' => 'cart',
+    ],
+
+    'checkout/cartAdd' => [
+        'controller' => 'cart',
+        'action' => 'cartAdd',
     ],
 
     'checkout' => [
         'controller' => 'checkout',
         'action' => 'checkout',
-    ],
-
-    'checkout/cartAdd' => [
-        'controller' => 'checkout',
-        'action' => 'cartAdd',
     ],
 
     'checkout/changeQuantity' => [
