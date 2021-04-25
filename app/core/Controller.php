@@ -31,7 +31,16 @@ abstract class Controller
 
     public function loadModel($name)
     {
-        $path = 'app\models\\' . ucfirst($name);
+        $parts = explode('/', $name);
+
+        $modelName = '';
+
+        foreach ($parts as $part) {
+            $modelName .= DS . ucfirst($part);
+        }
+
+        $path = 'app\models' . $modelName;
+
         if (class_exists($path)) {
             return new $path;
         } else {

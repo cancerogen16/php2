@@ -1,0 +1,53 @@
+{% extends "layouts/admin.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="products">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Наименование</th>
+                <th>Изображение</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if products %}
+            {% for product in products %}
+                <tr>
+                    <td class="number">{{ loop.index }}</td>
+                    <td class="name">{{ product.name }}</td>
+                    <td class="image">
+                        {% if product.thumb %}
+                        <img class="product-image" src="/public/img/{{ product.thumb }}" alt="{{ product.name }}">
+                        {% else %}
+                        Нет изображения
+                        {% endif %}
+                    </td>
+                    <td class="price">{{ product.price }}</td>
+                    <td class="quantity">{{ product.quantity }}</td>
+                    <td class="action"><a class="btn btn-primary" href="/admin/product?product_id={{ product.product_id }}"
+                                          title="Редактировать">Редактировать</a></td>
+                    <td class="action"><a class="btn btn-danger"
+                                          href="/admin/catalog?delete_product=1&product_id={{ product.product_id }}"
+                                          title="Удалить">Удалить</a></td>
+                </tr>
+            {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="10">Нет товаров</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+        <div class="add-product">
+            <a class="btn btn-secondary" href="product.php?add_product=1" title="Добавить товар">Добавить товар</a>
+        </div>
+    </div>
+{% endblock %}

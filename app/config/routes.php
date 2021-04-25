@@ -82,4 +82,9 @@ return [
         'controller' => 'admin/main',
         'action' => 'index',
     ],
+
+    'admin/catalog' => [
+        'controller' => 'admin/catalog',
+        'action' => 'index',
+    ],
 ];
