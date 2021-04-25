@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\core\Controller;
 use app\models\Cart;
+use app\models\Product;
 
 class CommonHeaderController extends Controller
 {
@@ -32,8 +33,42 @@ class CommonHeaderController extends Controller
         $cartModel = new Cart;
 
         if ($cart = $cartModel->getCart($user_id)) {
-            $vars['cart'] = $cart;
-            $vars['cart_products'] = $cart['products'];
+            $image_product_width = 50;
+            $image_product_height = 50;
+
+            require_once DIR_HELPERS . 'tools.php';
+
+            $productModel = new Product;
+
+            $count = 0;
+            $total = 0;
+
+            $vars['cart_products'] = [];
+
+            foreach ($cart['products'] as $product_id => $quantity) {
+                $product = $productModel->getProduct($product_id);
+
+                $total += $quantity * $product['price'];
+
+                if ($product['image']) {
+                    $image = resize($product['image'], $image_product_width, $image_product_height);
+                } else {
+                    $image = resize('noimage.jpg', $image_product_width, $image_product_height);
+                }
+
+                $product['thumb'] = $image;
+
+                $product['quantity'] = $quantity;
+                $product['total'] = priceFormat((float)$product['price'] * $quantity);
+                $product['price'] = priceFormat($product['price']);
+
+                $vars['cart_products'][] = $product;
+
+                $count++;
+            }
+
+            $vars['count'] = $count;
+            $vars['total'] = priceFormat($total);
         }
 
         $template = 'common/header.tmpl';

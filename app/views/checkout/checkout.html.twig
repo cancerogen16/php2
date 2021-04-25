@@ -19,8 +19,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% if products %}
-                            {% for product in products %}
+                        {% if cart_products %}
+                            {% for product in cart_products %}
                                 <tr>
                                     <td class="number">
                                         {{ loop.index }}
