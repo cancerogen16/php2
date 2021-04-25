@@ -1,10 +1,10 @@
 <?php
 
-namespace app\controllers;
+namespace app\controllers\Admin;
 
 use app\core\Controller;
 
-class AdminController extends Controller
+class MainController extends Controller
 {
     public function indexAction()
     {

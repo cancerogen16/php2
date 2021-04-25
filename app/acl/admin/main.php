@@ -11,6 +11,6 @@ return [
         //
     ],
     'admin' => [
-        'admin',
+        'index',
     ],
 ];
