@@ -58,7 +58,7 @@ class Cart extends Model
             }
 
             $cart['count'] = $count;
-            $cart['total'] = $total;
+            $cart['total'] = priceFormat($total);
         }
 
         return $cart;
