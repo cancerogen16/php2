@@ -40,9 +40,6 @@ html{box-sizing:border-box;-ms-overflow-style:scrollbar}
   align-items:center;
   justify-content:space-between;
 }
-.btn.remove{
-  background:#f95b5b;
-}
 .header{
   border:1px solid #ccc;
 }

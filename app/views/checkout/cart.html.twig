@@ -3,8 +3,69 @@
 {% block content %}
     <div class="row">
         <div class="col-12">
-            <div class="description">
-
+            <div class="cart-section">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Наименование</th>
+                        <th>Изображение</th>
+                        <th>Цена</th>
+                        <th>Количество</th>
+                        <th>Всего</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if products %}
+                        {% for product in products %}
+                            <tr>
+                                <td class="number">
+                                    {{ loop.index }}
+                                </td>
+                                <td class="name">
+                                    <a href="/product?product_id={{ product.product_id }}" title="{{ product.name }}">
+                                        {{ product.name }}
+                                    </a>
+                                </td>
+                                <td class="image">
+                                {% if product.thumb %}
+                                    <img class="cart-image" src="public/img/{{ product.thumb }}" alt="{{ product.name }}">
+                                {% else %}
+                                    Нет изображения
+                                {% endif %}
+                                </td>
+                                <td class="price">{{ product.price }}</td>
+                                <td class="quantity">{{ product.quantity }}</td>
+                                <td class="price">{{ product.total }}</td>
+                                <td class="action">
+                                    <a class="btn btn-danger" href="cart.php?removeFromCart=1&product_id=<?= $product['product_id'] ?>" title="Удалить">Удалить</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="10">Нет товаров в корзине</td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                    {% if products %}
+                        <tr>
+                            <td colspan="4">Итого</td>
+                            <td class="quantity">{{ count }}</td>
+                            <td class="price">{{ total }}</td>
+                            <td colspan="2"></td>
+                        </tr>
+                    {% endif %}
+                    </tfoot>
+                </table>
+            </div>
+            <div class="cart-btns d-flex justify-content-between">
+                <a class="btn btn-secondary" href="/catalog" title="Продолжить покупки">Продолжить покупки</a>
+                {% if products %}
+                    <a class="btn btn-primary" href="/checkout" title="Оформление заказа">Оформление заказа</a>
+                {% endif %}
             </div>
         </div>
     </div>

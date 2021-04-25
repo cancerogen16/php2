@@ -14,9 +14,17 @@ class CheckoutController extends Controller
             'title' => 'Корзина',
         ];
 
-        $vars['header'] = $this->getChild('CommonHeader', '');
+        $user_id = $this->user->getUserId();
 
-        $vars['description'] = ob_get_clean();
+        $cartModel = new Cart;
+
+        $cart = $cartModel->getCart($user_id);
+
+        $vars['products'] = $cart['products'];
+        $vars['count'] = $cart['count'];
+        $vars['total'] = $cart['total'];
+
+        $vars['header'] = $this->getChild('CommonHeader', '');
 
         $template = 'checkout/cart.html.twig';
 
