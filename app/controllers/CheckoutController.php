@@ -44,29 +44,6 @@ class CheckoutController extends Controller
 
             $cart = $cartModel->getCart($user_id);
 
-            $count = 0;
-            $total = 0;
-
-            $products = json_decode($cart['products'], true);
-
-            $cart['products'] = [];
-
-            foreach ($products as $product_id => $quantity) {
-                $product = $productModel->getProduct($product_id);
-
-                $cart['products'][$product_id] = $product;
-                $cart['products'][$product_id]['quantity'] = $quantity;
-                $cart['products'][$product_id]['price'] = (float)$product['price'];
-                $cart['products'][$product_id]['total'] = (float)$product['price'] * $quantity;
-
-                $count++;
-
-                $total += $quantity * $product['price'];
-            }
-
-            $cart['count'] = $count;
-            $cart['total'] = $total;
-
             $json = [
                 'success' => '1',
                 'products' => $cart['products'],

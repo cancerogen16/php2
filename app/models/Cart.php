@@ -20,6 +20,45 @@ class Cart extends Model
 
         if ($query->num_rows) {
             $cart = $query->row;
+
+            $count = 0;
+            $total = 0;
+
+            $products = json_decode($cart['products'], true);
+
+            $cart['products'] = [];
+
+            $image_product_width = 50;
+            $image_product_height = 50;
+
+            require_once DIR_HELPERS . 'tools.php';
+
+            $productModel = new Product;
+
+            foreach ($products as $product_id => $quantity) {
+                $product = $productModel->getProduct($product_id);
+
+                $total += $quantity * $product['price'];
+
+                if ($product['image']) {
+                    $image = resize($product['image'], $image_product_width, $image_product_height);
+                } else {
+                    $image = resize('noimage.jpg', $image_product_width, $image_product_height);
+                }
+
+                $product['thumb'] = $image;
+
+                $product['quantity'] = $quantity;
+                $product['total'] = priceFormat((float)$product['price'] * $quantity);
+                $product['price'] = priceFormat($product['price']);
+
+                $cart['products'][$product_id] = $product;
+
+                $count++;
+            }
+
+            $cart['count'] = $count;
+            $cart['total'] = $total;
         }
 
         return $cart;
