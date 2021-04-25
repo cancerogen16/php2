@@ -30,7 +30,7 @@ jQuery(document).ready(function ($) {
 
         $.ajax({
             type: "POST",
-            url: "checkout/cartAdd",
+            url: "cart/cartAdd",
             data: { product_id: product_id, quantity: quantity },
             dataType: "json"
         }).done(function(json) {
