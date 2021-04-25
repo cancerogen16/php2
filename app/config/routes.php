@@ -79,7 +79,7 @@ return [
 
 
     'admin' => [
-        'controller' => 'admin',
+        'controller' => 'admin/main',
         'action' => 'index',
     ],
 ];
