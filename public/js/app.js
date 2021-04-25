@@ -41,10 +41,11 @@ jQuery(document).ready(function ($) {
 
                 $modal.modal('show');
 
-                let headerCart = '<a class="cart__link" href="/cart">Корзина (' + json['count'] + ')</a>';
+                $('.header-cart .cart__link').html('Корзина (' + json['count'] + ')');
+
+                let headerCart = '';
 
                 if (json['products']) {
-                    headerCart += '<div class="cart-content">';
                     headerCart += '<table><tbody>';
                     for (const key in json['products']) {
                         if (Object.hasOwnProperty.call(json['products'], key)) {
@@ -52,22 +53,18 @@ jQuery(document).ready(function ($) {
                             headerCart += '<tr>';
                             headerCart += '<td><img src="img/' + product.image + '" alt="' + product.name + '" width="24"></td>';
                             headerCart += '<td><a class="cart__link" href="/product.php?product_id=' + product.product_id + '">' + product.name + '</a></td>';
-                            headerCart += '<td class="price">' + formatPrice(product.price) + '</td>';
+                            headerCart += '<td class="price">' + product.price + '</td>';
                             headerCart += '<td>' + product.quantity + '</td>';
-                            headerCart += '<td class="price">' + formatPrice(product.total) + '</td>';
+                            headerCart += '<td class="price">' + product.total + '</td>';
                             headerCart += '</tr>';
                         }
                     }
                     headerCart += '</tbody><tfoot>';
-                    headerCart += '<tr><td colspan="3">Итого</td><td>' + json.count + '</td><td class="price">' + formatPrice(json.total) + '</td></tr>';
+                    headerCart += '<tr><td colspan="3">Итого</td><td>' + json.count + '</td><td class="price">' + json.total + '</td></tr>';
                     headerCart += '</tfoot></table>';
-
-                    headerCart += '<div class="order-button"><a class="btn btn-primary" href="/checkout">Оформить заказ</a></div>';
-
-                    headerCart += '</div>';
                 }
 
-                $('.header-cart').html(headerCart);
+                $('.header-cart').find('table').replaceWith(headerCart);
 
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
             }
