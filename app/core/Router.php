@@ -43,7 +43,16 @@ class Router
     public function run()
     {
         if ($this->match()) {
-            $path = 'app\controllers\\' . ucfirst($this->params['controller']) . 'Controller';
+            $parts = explode('/', $this->params['controller']);
+
+            $controllerName = '';
+
+            foreach ($parts as $part) {
+                $controllerName .= DS . ucfirst($part);
+            }
+
+            $path = 'app\controllers' . $controllerName . 'Controller';
+
             if (class_exists($path)) {
                 $action = $this->params['action'] . 'Action';
                 if (method_exists($path, $action)) {
