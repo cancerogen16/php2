@@ -70,11 +70,6 @@ jQuery(document).ready(function ($) {
                 $('.header-cart').html(headerCart);
 
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
-
-                $('.modal .close').click(function(e) {
-                    e.preventDefault();
-                    $modal.modal('hide');
-                });
             }
         });
     });
