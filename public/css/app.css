@@ -6,6 +6,11 @@ body{
 }
 html{box-sizing:border-box;-ms-overflow-style:scrollbar}
 *{margin:0;padding:0;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+.modal .close{
+  border:0;
+  background:0;
+  font-size:30px;
+}
 .header-row{
   display:flex;
   align-items:center;
@@ -114,4 +119,63 @@ html{box-sizing:border-box;-ms-overflow-style:scrollbar}
 }
 .full-image{
   max-width:100%;
+}
+.table th,
+.table td{
+  border:1px solid #bbb;
+  padding:10px;
+}
+td.number{
+  text-align:center;
+}
+td.name{
+  text-align:left;
+}
+td.image{
+  text-align:center;
+}
+td.price{
+  text-align:right;
+  white-space:nowrap;
+}
+td.quantity{
+  text-align:center;
+}
+td.action{
+  text-align:center;
+}
+.cart-wrap{
+  margin:0 30px;
+}
+.header-cart{
+  position:relative;
+}
+.cart__link{
+  padding:10px;
+}
+.cart-content{
+  background:white;
+  display:none;
+  font-size:80%;
+  margin-top:5px;
+  padding:10px 10px 0 10px;
+  position:absolute;
+  -webkit-box-shadow:1px 1px 3px 1px #999999;
+  box-shadow:1px 1px 3px 1px #999999;
+}
+.header-cart:hover .cart-content{
+  display:block;
+}
+.cart-content table{
+  border-collapse:collapse;
+}
+.cart-content table tr{
+  border:1px solid #888;
+}
+.cart-content table td{
+  border:1px solid #f1f1f1;
+  padding:5px 10px;
+}
+.order-button{
+  margin:15px 0;
 }

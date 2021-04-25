@@ -23,4 +23,64 @@ jQuery(document).ready(function ($) {
 
     $(".validate").validate();
 
+    $('.addToCart').click(function(e) {
+        e.preventDefault();
+        const product_id = $(this).data('id');
+        const quantity = 1;
+
+        $.ajax({
+            type: "POST",
+            url: "checkout/cartAdd",
+            data: { product_id: product_id, quantity: quantity },
+            dataType: "json"
+        }).done(function(json) {
+            if (json['success']) {
+                const $modal = $('.addToCartModal');
+
+                $modal.find('.modal-title').html('Товар успешно добавлен в корзину');
+
+                $modal.modal('show');
+
+                let headerCart = '<a class="cart__link" href="/cart">Корзина (' + json['count'] + ')</a>';
+
+                if (json['products']) {
+                    headerCart += '<div class="cart-content">';
+                    headerCart += '<table><tbody>';
+                    for (const key in json['products']) {
+                        if (Object.hasOwnProperty.call(json['products'], key)) {
+                            const product = json['products'][key];
+                            headerCart += '<tr>';
+                            headerCart += '<td><img src="img/' + product.image + '" alt="' + product.name + '" width="24"></td>';
+                            headerCart += '<td><a class="cart__link" href="/product.php?product_id=' + product.product_id + '">' + product.name + '</a></td>';
+                            headerCart += '<td class="price">' + formatPrice(product.price) + '</td>';
+                            headerCart += '<td>' + product.quantity + '</td>';
+                            headerCart += '<td class="price">' + formatPrice(product.total) + '</td>';
+                            headerCart += '</tr>';
+                        }
+                    }
+                    headerCart += '</tbody><tfoot>';
+                    headerCart += '<tr><td colspan="3">Итого</td><td>' + json.count + '</td><td class="price">' + formatPrice(json.total) + '</td></tr>';
+                    headerCart += '</tfoot></table>';
+
+                    headerCart += '<div class="order-button"><a class="btn btn-primary" href="/checkout">Оформить заказ</a></div>';
+
+                    headerCart += '</div>';
+                }
+
+                $('.header-cart').html(headerCart);
+
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
+
+                $('.modal .close').click(function(e) {
+                    e.preventDefault();
+                    $modal.modal('hide');
+                });
+            }
+        });
+    });
 });
+
+function formatPrice(price) {
+    return summStr = Math.round(price).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");
+}
+

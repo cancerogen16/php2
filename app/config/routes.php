@@ -52,6 +52,11 @@ return [
         'action' => 'checkout',
     ],
 
+    'checkout/cartAdd' => [
+        'controller' => 'checkout',
+        'action' => 'cartAdd',
+    ],
+
     'error/403' => [
         'controller' => 'error',
         'action' => 'error403',
