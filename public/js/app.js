@@ -78,19 +78,25 @@ jQuery(document).ready(function ($) {
     function changeQuantity(product_id, quantity) {
         const $container = $('body').find('.cart-section');
         $.ajax({
-            url: "/checkout/changeQuantity?product_id=" + product_id+"&quantity=" + quantity,
+            type: "POST",
+            url: "/checkout/changeQuantity",
+            data: { product_id: product_id, quantity: quantity },
+            dataType: "json",
             beforeSend: function (xhr) {
                 $container.css({opacity:0.5});
             }
-        })
-            .done(function (html) {
+        }).done(function(json) {
+            if (json['success']) {
                 $container.css({opacity:1});
-                const $html = $(html);
-                const cartSection = $html.find('.cart-section').html();
-                $container.replaceWith('<div class="cart-section">'+cartSection+'</div>');
+                if (json['pageCart']) {
+                    const $html = $(json['pageCart']);
+                    const cartSection = $html.find('.cart-section').html();
+                    $container.replaceWith('<div class="cart-section">'+cartSection+'</div>');
+                }
                 $('.header-cart .cart__link').html('Корзина (' + json['count'] + ')');
                 $('.header-cart').find('table').replaceWith(getCartContent(json));
-            });
+            }
+        });
     }
 
     $(document).on('click', '.quantity-btn', function (e) {

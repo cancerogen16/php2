@@ -40,8 +40,8 @@ class CheckoutController extends Controller
             'title' => 'Оформление заказа',
         ];
 
-        $product_id = (int)filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
-        $quantity = (int)filter_input(INPUT_GET, 'quantity', FILTER_SANITIZE_SPECIAL_CHARS);
+        $product_id = (int)filter_input(INPUT_POST, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
+        $quantity = (int)filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_SPECIAL_CHARS);
 
         $user_id = $this->user->getUserId();
 
@@ -57,6 +57,16 @@ class CheckoutController extends Controller
 
         $template = 'checkout/checkout.html.twig';
 
-        $this->view->display($template, $vars);
+        $pageCart = $this->view->render($template, $vars);
+
+        $json = [
+            'success' => '1',
+            'products' => $cart['products'],
+            'count' => $cart['count'],
+            'total' => $cart['total'],
+            'pageCart' => $pageCart,
+        ];
+
+        exit(json_encode($json));
     }
 }
