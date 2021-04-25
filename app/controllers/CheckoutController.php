@@ -59,7 +59,7 @@ class CheckoutController extends Controller
             }
 
             $vars['count'] = $count;
-            $vars['totalSum'] = $cart['total'];
+            $vars['totalSum'] = $total;
             $vars['total'] = priceFormat($total);
         }
 
