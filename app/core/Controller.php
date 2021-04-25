@@ -79,7 +79,15 @@ abstract class Controller
     {
         $result = '';
 
-        $path = 'app\controllers\\' . ucfirst($child) . 'Controller';
+        $parts = explode('/', $child);
+
+        $controllerName = '';
+
+        foreach ($parts as $part) {
+            $controllerName .= DS . ucfirst($part);
+        }
+
+        $path = 'app\controllers' . $controllerName . 'Controller';
 
         if (class_exists($path)) {
             if ($action == '') {
