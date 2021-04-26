@@ -1,0 +1,46 @@
+{% extends "layouts/admin.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="orders">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Покупатель</th>
+                <th>Телефон</th>
+                <th>Адрес</th>
+                <th>Статус</th>
+                <th>Итого</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if orders %}
+                {% for order in orders %}
+                    <tr>
+                        <td class="number">{{ order.order_id }}</td>
+                        <td class="name">{{ order.username }}</td>
+                        <td class="name">{{ order.phone }}</td>
+                        <td class="name">{{ order.address }}</td>
+                        <td class="quantity">{{ order.order_status }}</td>
+                        <td class="price">{{ order.total }}</td>
+                        <td class="action">
+                            <a class="btn btn-primary" href="/admin/order/edit?order_id={{ order.order_id }}" title="Редактировать">Редактировать</a>
+                        </td>
+                        <td class="action">
+                            <a class="btn btn-danger" href="/admin/order/delete?order_id={{ order.order_id }}" title="Удалить">Удалить</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="10">Нет заказов</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

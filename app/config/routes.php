@@ -97,4 +97,9 @@ return [
         'controller' => 'admin/product',
         'action' => 'update',
     ],
+
+    'admin/orders' => [
+        'controller' => 'admin/order',
+        'action' => 'index',
+    ],
 ];
