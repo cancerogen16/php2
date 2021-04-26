@@ -70,6 +70,22 @@ class OrderController extends Controller
 
         $vars['order_id'] = $order_id;
 
+        if (isset($this->error['username'])) {
+            $vars['username_err'] = $this->error['username'];
+        } else {
+            $vars['username_err'] = '';
+        }
+        if (isset($this->error['phone'])) {
+            $vars['phone_err'] = $this->error['phone'];
+        } else {
+            $vars['phone_err'] = '';
+        }
+        if (isset($this->error['address'])) {
+            $vars['address_err'] = $this->error['address'];
+        } else {
+            $vars['address_err'] = '';
+        }
+
         if ($order_id) {
             $vars['action'] = '/admin/order/edit?order_id=' . $order_id;
         } else {
