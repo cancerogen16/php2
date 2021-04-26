@@ -9,23 +9,23 @@ abstract class Controller
 {
 
     public $route;
-    public $model;
-    public $view;
-    public $acl;
-
     public $user;
+    public $view;
+    public $model;
+
+    public $acl;
 
     public function __construct($route)
     {
         $this->route = $route;
 
-        $this->user = new User();
-
-        $this->view = new View($route);
-
         if (!$this->checkAcl()) {
             $this->redirect('/error/403');
         }
+
+        $this->user = new User();
+
+        $this->view = new View($route);
 
         $this->model = $this->loadModel($route['controller']);
     }
