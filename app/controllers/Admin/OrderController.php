@@ -6,6 +6,8 @@ use app\core\Controller;
 
 class OrderController extends Controller
 {
+    private $error = [];
+
     public function indexAction()
     {
         $this->getList();
@@ -13,6 +15,16 @@ class OrderController extends Controller
 
     public function editAction()
     {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && $this->validateForm()) {
+            $this->model->editOrder($_GET['order_id'], $_POST);
+
+            if (isset($_POST['apply'])) {
+                $this->redirect('/admin/order/edit?order_id=' . $_GET['order_id']);
+            } else {
+                $this->redirect('/admin/orders');
+            }
+        }
+
         $this->getForm();
     }
 
@@ -120,5 +132,23 @@ class OrderController extends Controller
         $template = 'admin/sale/order_form.html.twig';
 
         $this->view->display($template, $vars);
+    }
+
+    private function validateForm() {
+        if (trim($_POST['username']) == '') {
+            $this->error['username'] = 'Имя покупателя обязательно!';
+        }
+        if (trim($_POST['phone']) == '') {
+            $this->error['phone'] = 'Телефон покупателя обязателен!';
+        }
+        if (trim($_POST['address']) == '') {
+            $this->error['address'] = 'Адрес покупателя обязателен!';
+        }
+
+        if (!$this->error) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

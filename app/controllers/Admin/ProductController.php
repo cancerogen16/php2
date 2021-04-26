@@ -127,7 +127,7 @@ class ProductController extends Controller
 
     private function validateForm() {
         if (trim($_POST['name']) == '') {
-            $this->error['model'] = 'Название товара обязательно!';
+            $this->error['name'] = 'Название товара обязательно!';
         }
 
         if (!$this->error) {

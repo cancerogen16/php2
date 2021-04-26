@@ -43,19 +43,19 @@
                     {% for order_product in order_products %}
                         <tr>
                             <td class="number">{{ loop.index }}
-                                <input type="hidden" name="order_product[{{ loop.index }}][product_id]" value="{{ order_product.product_id }}">
+                                <input type="hidden" name="order_product[{{ loop.index0 }}][product_id]" value="{{ order_product.product_id }}">
                             </td>
                             <td class="name">{{ order_product.name }}
-                                <input type="hidden" name="order_product[{{ loop.index }}][name]" value="{{ order_product.name }}">
+                                <input type="hidden" name="order_product[{{ loop.index0 }}][name]" value="{{ order_product.name }}">
                             </td>
                             <td class="quantity">
-                                <input type="text" name="order_product[{{ loop.index }}][quantity]" class="form-control" value="{{ order_product.quantity }}" />
+                                <input type="text" name="order_product[{{ loop.index0 }}][quantity]" class="form-control" value="{{ order_product.quantity }}" />
                             </td>
                             <td class="price">{{ order_product.price }}
-                                <input type="hidden" name="order_product[{{ loop.index }}][price]" value="{{ order_product.price }}">
+                                <input type="hidden" name="order_product[{{ loop.index0 }}][price]" value="{{ order_product.price }}">
                             </td>
                             <td class="price">{{ order_product.total }}
-                                <input type="hidden" name="order_product[{{ loop.index }}][total]" value="{{ order_product.total }}">
+                                <input type="hidden" name="order_product[{{ loop.index0 }}][total]" value="{{ order_product.total }}">
                             </td>
                             <td class="action">
                                 <a class="btn btn-danger" href="javascript:void(0);" title="Удалить" onclick="$(this).closest('tr').remove();">Удалить</a>

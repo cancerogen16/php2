@@ -54,7 +54,31 @@ class Order extends Model
         return $order_data;
     }
 
-    function getOrderProducts($order_id) {
+    public function editOrder($order_id, $data) {
+        $sql = "UPDATE `order` SET username = '" . $this->db->escape($data['username']) . "', phone = '" . $this->db->escape($data['phone']) . "', address = '" . $this->db->escape($data['address']) . "', order_status_id = '" . (int)($data['order_status_id']) . "' WHERE order_id = '" . (int)$order_id . "'";
+        $this->db->query($sql);
+
+        $sql = "DELETE FROM `order_item` WHERE order_id = '" . (int)$order_id . "'";
+        $this->db->query($sql);
+
+        if (!empty($data['order_product'])) {
+            $total = 0;
+
+            foreach ($data['order_product'] as $product) {
+                $product_total = floatval($product['price']) * intval($product['quantity']);
+                $total += $product_total;
+
+                $sql = "INSERT INTO `order_item` (order_id, product_id, name, quantity, price, total) VALUES ('" . (int)$order_id . "', '" . (int)$product['product_id'] . "', '" . $this->db->escape($product['name']) . "', '" . intval($product['quantity']) . "', '" . floatval($product['price']) . "', '" . $product_total . "')";
+
+                $this->db->query($sql);
+            }
+
+            $sql = "UPDATE `order` SET total = '" . (float)$total . "' WHERE order_id = '" . (int)$order_id . "'";
+            $this->db->query($sql);
+        }
+    }
+
+    public function getOrderProducts($order_id) {
         $sql = "SELECT * FROM `order_item` WHERE order_id = '" . (int)$order_id . "'";
 
         $query = $this->db->query($sql);
