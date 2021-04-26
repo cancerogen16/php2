@@ -87,4 +87,9 @@ return [
         'controller' => 'admin/catalog',
         'action' => 'index',
     ],
+
+    'admin/product' => [
+        'controller' => 'admin/product',
+        'action' => 'index',
+    ],
 ];
