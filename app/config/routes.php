@@ -107,4 +107,9 @@ return [
         'controller' => 'admin/order',
         'action' => 'edit',
     ],
+
+    'admin/order/delete' => [
+        'controller' => 'admin/order',
+        'action' => 'delete',
+    ],
 ];

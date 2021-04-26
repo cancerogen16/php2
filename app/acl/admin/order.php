@@ -13,5 +13,6 @@ return [
     'admin' => [
         'index',
         'edit',
+        'delete',
     ],
 ];

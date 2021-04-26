@@ -78,6 +78,14 @@ class Order extends Model
         }
     }
 
+    public function deleteOrder($order_id) {
+        $sql = "DELETE FROM `order_item` WHERE order_id = '" . (int)$order_id . "'";
+        $this->db->query($sql);
+
+        $sql = "DELETE FROM `order` WHERE order_id = '" . (int)$order_id . "'";
+        $this->db->query($sql);
+    }
+
     public function getOrderProducts($order_id) {
         $sql = "SELECT * FROM `order_item` WHERE order_id = '" . (int)$order_id . "'";
 

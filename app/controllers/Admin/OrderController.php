@@ -28,6 +28,13 @@ class OrderController extends Controller
         $this->getForm();
     }
 
+    public function deleteAction()
+    {
+        $this->model->deleteOrder($_GET['order_id']);
+
+        $this->redirect('/admin/orders');
+    }
+
     private function getList() {
         $vars = [
             'title' => 'Список заказов',
