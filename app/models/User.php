@@ -15,6 +15,7 @@ class User extends Model
         parent::__construct();
 
         $this->user_id = isset($_SESSION['user_id']) && $_SESSION['loggedin'] == true ? $_SESSION['user_id'] : 0;
+        $this->username = isset($_SESSION['username']) && $_SESSION['loggedin'] == true ? $_SESSION['username'] : '';
     }
 
     /**
