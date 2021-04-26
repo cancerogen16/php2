@@ -124,9 +124,47 @@ class CheckoutController extends Controller
 
         $cart = $cartModel->getCart($user_id);
 
+        $image_product_width = 70;
+        $image_product_height = 70;
+
+        require_once DIR_HELPERS . 'tools.php';
+
+        $productModel = new Product;
+
+        $count = 0;
+        $total = 0;
+
         $vars['products'] = $cart['products'];
-        $vars['count'] = $cart['count'];
-        $vars['total'] = $cart['total'];
+
+        if (!empty($cart['products'])) {
+            foreach ($cart['products'] as $product_id => $quantity) {
+                $product = $productModel->getProduct($product_id);
+
+                $total += $quantity * $product['price'];
+
+                if ($product['image']) {
+                    $image = resize($product['image'], $image_product_width, $image_product_height);
+                } else {
+                    $image = resize('noimage.jpg', $image_product_width, $image_product_height);
+                }
+
+                $product['thumb'] = $image;
+
+                $product['quantity'] = $quantity;
+                $product['totalSum'] = (float)$product['price'] * $quantity;
+                $product['total'] = priceFormat((float)$product['price'] * $quantity);
+                $product['priceSum'] = $product['price'];
+                $product['price'] = priceFormat($product['price']);
+
+                $vars['cart_products'][] = $product;
+
+                $count++;
+            }
+
+            $vars['count'] = $count;
+            $vars['totalSum'] = $total;
+            $vars['total'] = priceFormat($total);
+        }
 
         $template = 'checkout/checkout.html.twig';
 
@@ -135,8 +173,8 @@ class CheckoutController extends Controller
         $json = [
             'success' => '1',
             'products' => $cart['products'],
-            'count' => $cart['count'],
-            'total' => $cart['total'],
+            'count' => $count,
+            'total' => $total,
             'pageCart' => $pageCart,
         ];
 
