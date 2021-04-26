@@ -39,18 +39,35 @@ class Order extends Model
         return $orders;
     }
 
-    public function getTotalProducts()
+    public function getOrder($order_id = 0)
     {
-        $total = 0;
+        $order_data = [];
 
-        $sql = "SELECT COUNT(*) as total FROM product";
+        $sql = "SELECT *, os.name as order_status FROM `order` LEFT JOIN order_status os on `order`.order_status_id = os.order_status_id  WHERE order_id = '" . (int)$order_id . "'";
 
         $query = $this->db->query($sql);
 
         if ($query->num_rows) {
-            $total = $query->row['total'];
+            $order_data = $query->row;
         }
 
-        return $total;
+        return $order_data;
+    }
+
+    function getOrderProducts($order_id) {
+        $sql = "SELECT * FROM `order_item` WHERE order_id = '" . (int)$order_id . "'";
+
+        $query = $this->db->query($sql);
+
+        return $query->rows;
+    }
+
+    public function getOrderStatuses()
+    {
+        $sql = "SELECT * FROM `order_status`";
+
+        $query = $this->db->query($sql);
+
+        return $query->rows;
     }
 }

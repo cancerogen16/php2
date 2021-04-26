@@ -102,4 +102,9 @@ return [
         'controller' => 'admin/order',
         'action' => 'index',
     ],
+
+    'admin/order/edit' => [
+        'controller' => 'admin/order',
+        'action' => 'edit',
+    ],
 ];

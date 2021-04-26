@@ -1,0 +1,93 @@
+{% extends "layouts/admin.html.twig" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <form class="order-edit" enctype="multipart/form-data" method="post" action="{{ action }}">
+        <input type="hidden" name="order_id" value="{{ order_id }}" />
+        <div class="data-wrap">
+            <h3>Покупатель</h3>
+            <div class="form-group{% if username_err %} has-error{% endif %}">
+                <label>Имя</label>
+                <input type="text" name="username" class="form-control" value="{{ username }}" placeholder="Имя">
+                <span class="field-error">{{ username_err }}</span>
+            </div>
+
+            <div class="form-group{% if phone_err %} has-error{% endif %}">
+                <label>Телефон</label>
+                <input type="text" name="phone" class="form-control" value="{{ phone }}" placeholder="Телефон">
+                <span class="field-error">{{ phone_err }}</span>
+            </div>
+
+            <div class="form-group{% if address_err %} has-error{% endif %}">
+                <label>Адрес</label>
+                <input type="text" name="address" class="form-control" value="{{ address }}" placeholder="Адрес">
+                <span class="field-error">{{ address_err }}</span>
+            </div>
+        </div>
+        <div class="data-wrap">
+            <h3>Товары в заказе</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Наименование</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Итого</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if order_products %}
+                    {% for order_product in order_products %}
+                        <tr>
+                            <td class="number">{{ loop.index }}
+                                <input type="hidden" name="order_product[{{ loop.index }}][product_id]" value="{{ order_product.product_id }}">
+                            </td>
+                            <td class="name">{{ order_product.name }}
+                                <input type="hidden" name="order_product[{{ loop.index }}][name]" value="{{ order_product.name }}">
+                            </td>
+                            <td class="quantity">
+                                <input type="text" name="order_product[{{ loop.index }}][quantity]" class="form-control" value="{{ order_product.quantity }}" />
+                            </td>
+                            <td class="price">{{ order_product.price }}
+                                <input type="hidden" name="order_product[{{ loop.index }}][price]" value="{{ order_product.price }}">
+                            </td>
+                            <td class="price">{{ order_product.total }}
+                                <input type="hidden" name="order_product[{{ loop.index }}][total]" value="{{ order_product.total }}">
+                            </td>
+                            <td class="action">
+                                <a class="btn btn-danger" href="javascript:void(0);" title="Удалить" onclick="$(this).closest('tr').remove();">Удалить</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td class="name" colspan="4">Итого</td>
+                        <td class="price">{{ total }}</td>
+                        <td></td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="10">Нет товаров в заказе</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="data-wrap">
+            <div class="form-group" style="width:50%">
+                <label>Статус заказа</label>
+                <select class="form-control" name="order_status_id">
+                    {% for status in statuses %}
+                        <option value="{{ status.order_status_id }}"{% if status.order_status_id == order_status_id %} selected{% endif %}>{{ status.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="data-wrap">
+            <button type="submit" name="save" class="btn btn-primary">Сохранить</button>
+            <button type="submit" name="apply" class="btn btn-secondary">Применить</button>
+        </div>
+    </form>
+{% endblock %}
