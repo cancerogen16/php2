@@ -18,9 +18,7 @@ class CartController extends Controller
 
         $user_id = $this->user->getUserId();
 
-        $cartModel = new Cart;
-
-        $cart = $cartModel->getCart($user_id);
+        $cart = $this->model->getCart($user_id);
 
         $image_product_width = 50;
         $image_product_height = 50;
