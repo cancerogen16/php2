@@ -167,6 +167,38 @@ jQuery(document).ready(function ($) {
             }
         });
     });
+
+    const $ordersStatuses = $('.orders select[name=order_status_id]');
+
+    if ($ordersStatuses.length) {
+        $(document).on('change', 'select[name=order_status_id]', function (e) {
+            e.preventDefault();
+
+            const $select = $(this);
+            const order_id = $(this).data('id');
+            const order_status_id = $(this).val();
+
+            const $row = $(this).closest('tr');
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/order/changeOrderStatus",
+                data: { order_id: order_id, order_status_id: order_status_id },
+                dataType: "json",
+                beforeSend: function (xhr) {
+                    $row.css({opacity:0.5});
+                }
+            }).done(function(json) {
+                $row.css({opacity:1});
+                if (json['success']) {
+                    $select.val(order_status_id);
+                    $select.css({"border-color":"green"});
+                } else {
+                    $select.css({"border-color":"red"});
+                }
+            });
+        });
+    }
 });
 
 function formatPrice(price) {

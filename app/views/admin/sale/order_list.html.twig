@@ -25,7 +25,13 @@
                         <td class="name">{{ order.username }}</td>
                         <td class="name">{{ order.phone }}</td>
                         <td class="name">{{ order.address }}</td>
-                        <td class="quantity">{{ order.order_status }}</td>
+                        <td class="status">
+                            <select class="form-control" name="order_status_id" data-id="{{ order.order_id }}">
+                                {% for status in statuses %}
+                                    <option value="{{ status.order_status_id }}"{% if status.order_status_id == order.order_status_id %} selected{% endif %}>{{ status.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
                         <td class="price">{{ order.total }}</td>
                         <td class="action">
                             <a class="btn btn-primary" href="/admin/order/edit?order_id={{ order.order_id }}" title="Редактировать">Редактировать</a>

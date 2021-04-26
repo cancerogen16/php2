@@ -61,6 +61,8 @@ class OrderController extends Controller
 
         $vars['orders'] = $this->model->getOrders($data);
 
+        $vars['statuses'] = $this->model->getOrderStatuses();
+
         $vars['header'] = $this->getChild('Admin/CommonHeader', '');
 
         $template = 'admin/sale/order_list.html.twig';
@@ -173,5 +175,19 @@ class OrderController extends Controller
         } else {
             return false;
         }
+    }
+
+    public function changeOrderStatusAction()
+    {
+        $order_id = (int)filter_input(INPUT_POST, 'order_id', FILTER_SANITIZE_SPECIAL_CHARS);
+        $order_status_id = (int)filter_input(INPUT_POST, 'order_status_id', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        $this->model->changeOrderStatus($order_id, $order_status_id);
+
+        $json = [
+            'success' => '1',
+        ];
+
+        exit(json_encode($json));
     }
 }

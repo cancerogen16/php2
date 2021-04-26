@@ -14,5 +14,6 @@ return [
         'index',
         'edit',
         'delete',
+        'changeOrderStatus',
     ],
 ];

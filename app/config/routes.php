@@ -112,4 +112,9 @@ return [
         'controller' => 'admin/order',
         'action' => 'delete',
     ],
+
+    'admin/order/changeOrderStatus' => [
+        'controller' => 'admin/order',
+        'action' => 'changeOrderStatus',
+    ],
 ];
