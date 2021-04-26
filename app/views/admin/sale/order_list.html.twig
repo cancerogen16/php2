@@ -13,6 +13,7 @@
                 <th>Адрес</th>
                 <th>Статус</th>
                 <th>Итого</th>
+                <th>Дата</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -33,6 +34,7 @@
                             </select>
                         </td>
                         <td class="price">{{ order.total }}</td>
+                        <td class="date">{{ order.date_added | date("d.m.Y H:i:s") }}</td>
                         <td class="action">
                             <a class="btn btn-primary" href="/admin/order/edit?order_id={{ order.order_id }}" title="Редактировать">Редактировать</a>
                         </td>
