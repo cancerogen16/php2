@@ -24,7 +24,7 @@ abstract class Controller
         $this->view = new View($route);
 
         if (!$this->checkAcl()) {
-            $this->redirect('error/403');
+            $this->redirect('/error/403');
         }
 
         $this->model = $this->loadModel($route['controller']);
