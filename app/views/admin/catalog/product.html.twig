@@ -3,49 +3,47 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    {% if product %}
-        <form class="product-edit" enctype="multipart/form-data" method="post" action="">
-            <div class="data-wrap">
-                <input type="hidden" name="product_id" value="{{ product.product_id }}" />
-                <input type="hidden" name="image" value="{{ product.image }}" />
+    <form class="product-edit row" enctype="multipart/form-data" method="post" action="{{ action }}">
+        <div class="data-wrap col">
+            <fieldset>
+                <input type="hidden" name="product_id" value="{{ product_id }}" />
+                <input type="hidden" name="image" value="{{ image }}" />
                 <div class="form-group"><label for="product_name">Название товара </label>
-                    <input type="text" name="name" value="{{ product.name }}" id="product_name" placeholder="Название товара" />
-                    <span class="field-error">{{ product.name_err }}</span>
+                    <input type="text" name="name" value="{{ name }}" id="product_name" placeholder="Название товара" />
+                    <span class="field-error">{{ name_err }}</span>
                 </div>
                 <div class="form-group"><label for="product_quantity">Количество товара </label>
-                    <input type="text" name="quantity" value="{{ product.quantity }}" id="product_quantity" placeholder="Количество товара" />
+                    <input type="text" name="quantity" value="{{ quantity }}" id="product_quantity" placeholder="Количество товара" />
                 </div>
                 <div class="form-group"><label for="product_price">Цена товара </label>
-                    <input type="text" name="price" value="{{ product.price }}" id="product_price" placeholder="Цена товара" />
+                    <input type="text" name="price" value="{{ price }}" id="product_price" placeholder="Цена товара" />
                 </div>
                 <button type="submit" name="save" class="btn btn-primary">Сохранить</button>
                 <button type="submit" name="apply" class="btn btn-secondary">Применить</button>
-            </div>
-            <div class="image-wrap">
-                {% if product.image %}
-                    <img src="/public/img/{{ product.image }}" alt="{{ product.name }}" width="300">
-                {% else %}
-                    Нет изображения
-                {% endif %}
+            </fieldset>
+        </div>
+        <div class="image-wrap col">
+            {% if thumb %}
+                <img src="/public/img/{{ thumb }}" alt="{{ name }}">
+            {% else %}
+                Нет изображения
+            {% endif %}
 
-                <div class="upload">
-                    <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
-                    <input type="file" name="file">
-                    <button type="submit" name="load_image" class="btn btn-primary">
-                        {% if product.image %}
-                            Заменить изображение
-                        {% else %}
-                            Загрузить изображение
-                        {% endif %}
-                    </button>
-                </div>
-
-                <div class="message">
-                    {{ message }}
-                </div>
+            <div class="upload">
+                <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
+                <input type="file" name="file">
+                <button type="submit" name="load_image" class="btn btn-primary">
+                    {% if image %}
+                        Заменить изображение
+                    {% else %}
+                        Загрузить изображение
+                    {% endif %}
+                </button>
             </div>
-        </form>
-    {% else %}
-        <p>Нет товара в базе данных</p>
-    {% endif %}
+
+            <div class="message">
+                {{ message }}
+            </div>
+        </div>
+    </form>
 {% endblock %}

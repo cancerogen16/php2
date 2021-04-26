@@ -9,6 +9,7 @@ abstract class Controller
 {
 
     public $route;
+    public $model;
     public $view;
     public $acl;
 
