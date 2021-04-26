@@ -9,7 +9,6 @@ class User extends Model
     private $user_id;
 
     public $username;
-    public $password;
 
     public function __construct()
     {
