@@ -84,13 +84,11 @@ class CartController extends Controller
 
             $user_id = $this->user->getUserId();
 
-            $cartModel = new Cart;
-
-            $result = $cartModel->add($product_id, $quantity, $user_id);
+            $result = $this->model->add($product_id, $quantity, $user_id);
 
             $products = [];
 
-            $cart = $cartModel->getCart($user_id);
+            $cart = $this->model->getCart($user_id);
 
             if (!empty($cart['products'])) {
                 $image_product_width = 40;
@@ -142,11 +140,9 @@ class CartController extends Controller
 
         $user_id = $this->user->getUserId();
 
-        $cartModel = new Cart;
+        $result = $this->model->removeFromCart($product_id, $user_id);
 
-        $result = $cartModel->removeFromCart($product_id, $user_id);
-
-        $cart = $cartModel->getCart($user_id);
+        $cart = $this->model->getCart($user_id);
 
         $productModel = new Product;
 
