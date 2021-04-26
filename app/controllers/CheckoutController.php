@@ -63,7 +63,8 @@ class CheckoutController extends Controller
             $vars['total'] = priceFormat($total);
         }
 
-        $vars['username'] = $vars['phone'] = $vars['address'] = "";
+        $vars['username'] = $this->user->username;
+        $vars['phone'] = $vars['address'] = "";
         $vars['username_err'] = $vars['phone_err'] = $vars['address_err'] = "";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
