@@ -77,6 +77,11 @@ return [
         'action' => 'error403',
     ],
 
+    'error/404' => [
+        'controller' => 'error',
+        'action' => 'error404',
+    ],
+
 
     'admin' => [
         'controller' => 'admin/main',

@@ -66,13 +66,19 @@ class Router
 
                     $controller->$action();
                 } else {
-                    View::errorCode(404);
+                    $this->redirect('/error/404');
                 }
             } else {
-                View::errorCode(404);
+                $this->redirect('/error/404');
             }
         } else {
-            View::errorCode(404);
+            $this->redirect('/error/404');
         }
+    }
+
+    public function redirect($url)
+    {
+        header('location: ' . $url);
+        exit;
     }
 }
