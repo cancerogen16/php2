@@ -9,8 +9,8 @@
     }],
     "require": {
         "twig/twig": "^3.0",
-        "ext-pdo": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-mysqli": "*"
     },
     "autoload": {
         "psr-4": {

@@ -1,145 +1,64 @@
 <?php
-
 namespace app\lib;
 
-use PDO;
+final class Db {
+    private $connection;
 
-final class Db
-{
-    private $connection = null;
-    private $statement = null;
+    public function __construct($hostname, $username, $password, $database, $port = '3306') {
+        $this->connection = new \mysqli($hostname, $username, $password, $database, $port);
 
-    private static $instance;
-
-    private function __construct()
-    {
-        $config = require dirname(__DIR__) . DS .'config' . DS . 'db.php';
-
-        $hostname = $config['host'];
-        $port = '3306';
-        $database = $config['name'];
-        $username = $config['user'];
-        $password = $config['password'];
-
-        try {
-            $this->connection = new PDO("mysql:host=" . $hostname . ";port=" . $port . ";dbname=" . $database, $username, $password, array(\PDO::ATTR_PERSISTENT => true));
-        } catch (\PDOException $e) {
-            throw new \Exception('Failed to connect to database. Reason: \'' . $e->getMessage() . '\'');
+        if ($this->connection->connect_error) {
+            throw new \Exception('Error: ' . $this->connection->error . '<br />Error No: ' . $this->connection->errno);
         }
 
-        $this->connection->exec("SET NAMES 'utf8'");
-        $this->connection->exec("SET CHARACTER SET utf8");
-        $this->connection->exec("SET CHARACTER_SET_CONNECTION=utf8");
-        $this->connection->exec("SET SQL_MODE = ''");
+        $this->connection->set_charset("utf8");
+        $this->connection->query("SET SQL_MODE = ''");
     }
 
-    public static function getInstance(): self
-    {
-        if (self::$instance === null) {
-            self::$instance = new self();
-        }
+    public function query($sql) {
+        $query = $this->connection->query($sql);
 
-        return self::$instance;
-    }
-
-    public function prepare($sql)
-    {
-        $this->statement = $this->connection->prepare($sql);
-    }
-
-    public function bindParam($parameter, $variable, $data_type = \PDO::PARAM_STR, $length = 0)
-    {
-        if ($length) {
-            $this->statement->bindParam($parameter, $variable, $data_type, $length);
-        } else {
-            $this->statement->bindParam($parameter, $variable, $data_type);
-        }
-    }
-
-    public function execute()
-    {
-        try {
-            if ($this->statement && $this->statement->execute()) {
+        if (!$this->connection->errno) {
+            if ($query instanceof \mysqli_result) {
                 $data = array();
 
-                while ($row = $this->statement->fetch(\PDO::FETCH_ASSOC)) {
+                while ($row = $query->fetch_assoc()) {
                     $data[] = $row;
                 }
 
                 $result = new \stdClass();
-                $result->row = (isset($data[0])) ? $data[0] : array();
+                $result->num_rows = $query->num_rows;
+                $result->row = isset($data[0]) ? $data[0] : array();
                 $result->rows = $data;
-                $result->num_rows = $this->statement->rowCount();
+
+                $query->close();
+
+                return $result;
+            } else {
+                return true;
             }
-        } catch (\PDOException $e) {
-            throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode());
-        }
-    }
-
-    public function query($sql, $params = array())
-    {
-        $this->statement = $this->connection->prepare($sql);
-
-        $result = false;
-
-        try {
-            if ($this->statement && $this->statement->execute($params)) {
-                $data = array();
-
-                while ($row = $this->statement->fetch(\PDO::FETCH_ASSOC)) {
-                    $data[] = $row;
-                }
-
-                $result = new \stdClass();
-                $result->row = (isset($data[0]) ? $data[0] : array());
-                $result->rows = $data;
-                $result->num_rows = $this->statement->rowCount();
-            }
-        } catch (\PDOException $e) {
-            throw new \Exception('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
-        }
-
-        if ($result) {
-            return $result;
         } else {
-            $result = new \stdClass();
-            $result->row = array();
-            $result->rows = array();
-            $result->num_rows = 0;
-            return $result;
+            throw new \Exception('Error: ' . $this->connection->error  . '<br />Error No: ' . $this->connection->errno . '<br />' . $sql);
         }
     }
 
-    public function escape($value)
-    {
-        return str_replace(array("\\", "\0", "\n", "\r", "\x1a", "'", '"'), array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"'), $value);
+    public function escape($value) {
+        return $this->connection->real_escape_string($value);
     }
 
-    public function countAffected()
-    {
-        if ($this->statement) {
-            return $this->statement->rowCount();
-        } else {
-            return 0;
-        }
+    public function countAffected() {
+        return $this->connection->affected_rows;
     }
 
-    public function getLastId()
-    {
-        return $this->connection->lastInsertId();
+    public function getLastId() {
+        return $this->connection->insert_id;
     }
 
-    public function isConnected()
-    {
-        if ($this->connection) {
-            return true;
-        } else {
-            return false;
-        }
+    public function connected() {
+        return $this->connection->ping();
     }
 
-    public function __destruct()
-    {
-        $this->connection = null;
+    public function __destruct() {
+        $this->connection->close();
     }
 }

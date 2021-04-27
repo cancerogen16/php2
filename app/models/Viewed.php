@@ -65,16 +65,11 @@ class Viewed extends Model
                 $this->deleteViewed($viewed_pages);
             }
 
-            $sql = "INSERT INTO viewed (user_id, url, title, views) VALUES (:user_id, :url, :title, :views)";
-
             $views_count++;
 
-            $this->db->query($sql, [
-                'user_id' => $user_id,
-                'url' => $url,
-                'title' => $title,
-                'views' => $views_count,
-            ]);
+            $sql = "INSERT INTO viewed SET user_id = '" . (int)$user_id . "', url = '" . $this->db->escape($url) . "', title = '" . $this->db->escape($title) . "', views = '" . (int)$views_count . "'";
+
+            $this->db->query($sql);
         } else {
             $sql = "UPDATE viewed SET views = views + 1 WHERE user_id = '" . (int)$user_id . "' AND url = '" . $url . "'";
 
