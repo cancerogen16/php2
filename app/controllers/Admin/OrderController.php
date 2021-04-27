@@ -68,7 +68,7 @@ class OrderController extends Controller
 
         $template = 'admin/sale/order_list.html.twig';
 
-        if ($_POST['test'] == '1') {
+        if (isset($_POST['test']) && $_POST['test'] == '1') {
             return $vars;
         } else {
             $this->view->display($template, $vars);
@@ -162,7 +162,7 @@ class OrderController extends Controller
 
         $template = 'admin/sale/order_form.html.twig';
 
-        if ($_POST['test'] == '1') {
+        if (isset($_POST['test']) && $_POST['test'] == '1') {
             return $vars;
         } else {
             $this->view->display($template, $vars);
