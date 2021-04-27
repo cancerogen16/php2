@@ -4,7 +4,7 @@ namespace app\core;
 
 use app\lib\Db;
 
-abstract class Model
+class Model
 {
     public $db;
 
