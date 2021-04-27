@@ -68,12 +68,16 @@ class OrderController extends Controller
 
         $template = 'admin/sale/order_list.html.twig';
 
-        $this->view->display($template, $vars);
+        if ($_POST['test'] == '1') {
+            return $vars;
+        } else {
+            $this->view->display($template, $vars);
+        }
     }
 
     public function getForm()
     {
-        $order_id = filter_input(INPUT_GET, 'order_id', FILTER_SANITIZE_SPECIAL_CHARS);
+        $order_id = (int)$_GET['order_id'];
 
         $vars = [
             'title' => 'Редактирование заказа #' . $order_id,
@@ -158,7 +162,11 @@ class OrderController extends Controller
 
         $template = 'admin/sale/order_form.html.twig';
 
-        $this->view->display($template, $vars);
+        if ($_POST['test'] == '1') {
+            return $vars;
+        } else {
+            $this->view->display($template, $vars);
+        }
     }
 
     public function validateForm()
