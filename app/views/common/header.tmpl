@@ -10,6 +10,11 @@
                     <li class="nav-item menu__item">
                         <a class="nav-link menu__link" href="/catalog">Каталог товаров</a>
                     </li>
+                {% if admin %}
+                    <li class="nav-item menu__item">
+                        <a class="nav-link menu__link" href="/admin">Панель администратора</a>
+                    </li>
+                {% endif %}
                 </ul>
             </div>
             <div class="header-row__right col align-self-center d-flex justify-content-end">

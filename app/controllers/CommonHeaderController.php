@@ -15,19 +15,23 @@ class CommonHeaderController extends Controller
         $username = '';
         $user_id = 0;
 
-        $vars['cart'] = [];
-        $vars['cart_products'] = [];
+        $admin = 0;
 
         if (!empty($_SESSION["username"])) {
             $logged = true;
             $username = htmlspecialchars($_SESSION["username"]);
             $user_id = (int)$_SESSION["user_id"];
+
+            if ($_SESSION['user_role'] == 'admin') {
+                $admin = 1;
+            }
         }
 
         $vars = [
             'logged' => $logged,
             'username' => $username,
             'user_id' => $user_id,
+            'admin' => $admin,
         ];
 
         $cartModel = new Cart;
