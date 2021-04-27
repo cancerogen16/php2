@@ -1,7 +1,7 @@
 <?php
 
 define('DS', DIRECTORY_SEPARATOR); // разделитель для путей к файлам
-$sitePath = str_replace('/', DS, $_SERVER['DOCUMENT_ROOT']) . DS;
+$sitePath = str_replace('/', DS, dirname(dirname(dirname(__FILE__)))) . DS;
 define('SITE_PATH', $sitePath); // путь к корневой папке сайта
 define('DIR_APPLICATION', SITE_PATH . 'app' . DS);
 define('DIR_CONFIG', DIR_APPLICATION . 'config' . DS);
