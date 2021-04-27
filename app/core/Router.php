@@ -28,9 +28,15 @@ class Router
         $url = trim($_SERVER['REQUEST_URI'], '/');
         $parts = parse_url($url);
 
+        $path = '';
+
+        if (isset($parts['path'])) {
+            $path = $parts['path'];
+        }
+
         if ($parts) {
             foreach ($this->routes as $route => $params) {
-                if (preg_match($route, $parts['path'], $matches)) {
+                if (preg_match($route, $path, $matches)) {
                     $this->params = $params;
                     return true;
                 }
