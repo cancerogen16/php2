@@ -8,13 +8,32 @@ use app\models\Viewed;
 abstract class Controller
 {
 
+    /**
+     * @var
+     */
     public $route;
+    /**
+     * @var User
+     */
     public $user;
+    /**
+     * @var View
+     */
     public $view;
+    /**
+     * @var bool|mixed
+     */
     public $model;
 
+    /**
+     * @var
+     */
     public $acl;
 
+    /**
+     * Controller constructor.
+     * @param $route
+     */
     public function __construct($route)
     {
         $this->route = $route;
@@ -30,6 +49,10 @@ abstract class Controller
         $this->model = $this->loadModel($route['controller']);
     }
 
+    /**
+     * @param $name
+     * @return bool|mixed
+     */
     public function loadModel($name)
     {
         $parts = explode('/', $name);
@@ -49,12 +72,18 @@ abstract class Controller
         }
     }
 
+    /**
+     * @param $url
+     */
     public function redirect($url)
     {
         header('location: ' . $url);
         exit;
     }
 
+    /**
+     * @return bool
+     */
     public function checkAcl()
     {
         $parts = explode('/', $this->route['controller']);
@@ -80,11 +109,20 @@ abstract class Controller
         return false;
     }
 
+    /**
+     * @param $key
+     * @return bool
+     */
     public function isAcl($key)
     {
         return in_array($this->route['action'], $this->acl[$key]);
     }
 
+    /**
+     * @param $child
+     * @param $action
+     * @return string
+     */
     protected function getChild($child, $action)
     {
         $result = '';
