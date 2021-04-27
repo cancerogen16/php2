@@ -35,7 +35,8 @@ class OrderController extends Controller
         $this->redirect('/admin/orders');
     }
 
-    private function getList() {
+    private function getList()
+    {
         $vars = [
             'title' => 'Список заказов',
         ];
@@ -70,7 +71,8 @@ class OrderController extends Controller
         $this->view->display($template, $vars);
     }
 
-    private function getForm() {
+    private function getForm()
+    {
         $order_id = filter_input(INPUT_GET, 'order_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
         $vars = [
@@ -144,11 +146,11 @@ class OrderController extends Controller
         foreach ($products as $product) {
             $vars['order_products'][] = array(
                 'product_id' => $product['product_id'],
-                'name'       => $product['name'],
-                'quantity'   => $product['quantity'],
-                'price'      => $product['price'],
-                'total'      => $product['total'],
-                'order_id'   => $product['order_id']
+                'name' => $product['name'],
+                'quantity' => $product['quantity'],
+                'price' => $product['price'],
+                'total' => $product['total'],
+                'order_id' => $product['order_id']
             );
         }
 
@@ -159,7 +161,8 @@ class OrderController extends Controller
         $this->view->display($template, $vars);
     }
 
-    private function validateForm() {
+    private function validateForm()
+    {
         if (trim($_POST['username']) == '') {
             $this->error['username'] = 'Имя покупателя обязательно!';
         }
