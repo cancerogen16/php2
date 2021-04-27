@@ -35,7 +35,7 @@ class OrderController extends Controller
         $this->redirect('/admin/orders');
     }
 
-    private function getList()
+    public function getList()
     {
         $vars = [
             'title' => 'Список заказов',
@@ -71,7 +71,7 @@ class OrderController extends Controller
         $this->view->display($template, $vars);
     }
 
-    private function getForm()
+    public function getForm()
     {
         $order_id = filter_input(INPUT_GET, 'order_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
@@ -161,7 +161,7 @@ class OrderController extends Controller
         $this->view->display($template, $vars);
     }
 
-    private function validateForm()
+    public function validateForm()
     {
         if (trim($_POST['username']) == '') {
             $this->error['username'] = 'Имя покупателя обязательно!';
