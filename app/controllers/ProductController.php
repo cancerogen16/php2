@@ -20,12 +20,12 @@ class ProductController extends Controller
         require_once DIR_HELPERS . 'tools.php';
 
         if ($product_info['image']) {
-            $image = resize($product_info['image'], $image_product_width, $image_product_height);
+            $thumb = resize($product_info['image'], $image_product_width, $image_product_height);
         } else {
-            $image = resize('noimage.jpg', $image_product_width, $image_product_height);
+            $thumb = resize('noimage.jpg', $image_product_width, $image_product_height);
         }
 
-        $product_info['thumb'] = $image;
+        $product_info['thumb'] = $thumb;
         $product_info['price'] = priceFormat($product_info['price']);
 
         $vars['title'] = $product_info['name'];
