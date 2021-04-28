@@ -38,8 +38,6 @@ class CommonHeaderController extends Controller
         $total = 0;
 
         $vars['cart_products'] = [];
-        $vars['count'] = 0;
-        $vars['total'] = '';
 
         if ($cart = $this->loadModel('cart')->getCart($user_id)) {
             if (!empty($cart['products'])) {
@@ -47,7 +45,7 @@ class CommonHeaderController extends Controller
                 $image_product_height = 50;
 
                 require_once DIR_HELPERS . 'tools.php';
-                
+
                 foreach ($cart['products'] as $product_id => $quantity) {
                     $product = $this->loadModel('product')->getProduct($product_id);
 
@@ -69,11 +67,11 @@ class CommonHeaderController extends Controller
 
                     $count++;
                 }
-
-                $vars['count'] = $count;
-                $vars['total'] = priceFormat($total);
             }
         }
+
+        $vars['count'] = $count;
+        $vars['total'] = priceFormat($total);
 
         $template = 'common/header.tmpl';
 
