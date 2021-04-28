@@ -47,11 +47,9 @@ class CommonHeaderController extends Controller
                 $image_product_height = 50;
 
                 require_once DIR_HELPERS . 'tools.php';
-
-                $productModel = new Product;
-
+                
                 foreach ($cart['products'] as $product_id => $quantity) {
-                    $product = $productModel->getProduct($product_id);
+                    $product = $this->loadModel('product')->getProduct($product_id);
 
                     $total += $quantity * $product['price'];
 

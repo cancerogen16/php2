@@ -24,8 +24,6 @@ class CheckoutController extends Controller
 
         require_once DIR_HELPERS . 'tools.php';
 
-        $productModel = new Product;
-
         $count = 0;
         $total = 0;
 
@@ -33,7 +31,7 @@ class CheckoutController extends Controller
 
         if (!empty($cart['products'])) {
             foreach ($cart['products'] as $product_id => $quantity) {
-                $product = $productModel->getProduct($product_id);
+                $product = $this->loadModel('product')->getProduct($product_id);
 
                 $total += $quantity * $product['price'];
 
@@ -126,8 +124,6 @@ class CheckoutController extends Controller
 
         require_once DIR_HELPERS . 'tools.php';
 
-        $productModel = new Product;
-
         $count = 0;
         $total = 0;
 
@@ -135,7 +131,7 @@ class CheckoutController extends Controller
 
         if (!empty($cart['products'])) {
             foreach ($cart['products'] as $product_id => $quantity) {
-                $product = $productModel->getProduct($product_id);
+                $product = $this->loadModel('product')->getProduct($product_id);
 
                 $total += $quantity * $product['price'];
 
@@ -197,8 +193,6 @@ class CheckoutController extends Controller
 
         require_once DIR_HELPERS . 'tools.php';
 
-        $productModel = new Product;
-
         $count = 0;
         $total = 0;
 
@@ -206,7 +200,7 @@ class CheckoutController extends Controller
 
         if (!empty($cart['products'])) {
             foreach ($cart['products'] as $product_id => $quantity) {
-                $product = $productModel->getProduct($product_id);
+                $product = $this->loadModel('product')->getProduct($product_id);
 
                 $total += $quantity * $product['price'];
 

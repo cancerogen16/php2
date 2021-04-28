@@ -25,15 +25,13 @@ class CartController extends Controller
 
         require_once DIR_HELPERS . 'tools.php';
 
-        $productModel = new Product;
-
         $count = 0;
         $total = 0;
 
         $vars['products'] = [];
 
         foreach ($cart['products'] as $product_id => $quantity) {
-            $product = $productModel->getProduct($product_id);
+            $product = $this->loadModel('product')->getProduct($product_id);
 
             $total += $quantity * $product['price'];
 
@@ -70,12 +68,10 @@ class CartController extends Controller
         
         $product_id = (int)filter_input(INPUT_POST, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $productModel = new Product;
-
         $count = 0;
         $total = 0;
 
-        $product_info = $productModel->getProduct($product_id);
+        $product_info = $this->loadModel('product')->getProduct($product_id);
 
         if ($product_info) {
             require_once DIR_HELPERS . 'tools.php';
@@ -95,7 +91,7 @@ class CartController extends Controller
                 $image_product_height = 40;
 
                 foreach ($cart['products'] as $product_id => $quantity) {
-                    $product = $productModel->getProduct($product_id);
+                    $product = $this->loadModel('product')->getProduct($product_id);
 
                     $total += $quantity * $product['price'];
 
@@ -144,13 +140,11 @@ class CartController extends Controller
 
         $cart = $this->model->getCart($user_id);
 
-        $productModel = new Product;
-
         $count = 0;
         $total = 0;
 
         foreach ($cart['products'] as $product_id => $quantity) {
-            $product = $productModel->getProduct($product_id);
+            $product = $this->loadModel('product')->getProduct($product_id);
 
             $total += $quantity * $product['price'];
 

@@ -29,7 +29,7 @@ class CommonHeaderController extends Controller
             'username' => $username,
             'user_id' => $user_id,
         ];
-        
+
         $count = 0;
         $total = 0;
 
@@ -44,10 +44,8 @@ class CommonHeaderController extends Controller
 
                 require_once DIR_HELPERS . 'tools.php';
 
-                $productModel = new Product;
-
                 foreach ($cart['products'] as $product_id => $quantity) {
-                    $product = $productModel->getProduct($product_id);
+                    $product = $this->loadModel('product')->getProduct($product_id);
 
                     $total += $quantity * $product['price'];
 
