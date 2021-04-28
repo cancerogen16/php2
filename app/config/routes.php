@@ -118,8 +118,8 @@ return [
         'action' => 'delete',
     ],
 
-    'admin/order/changeOrderStatus' => [
+    'admin/order/setOrderStatus' => [
         'controller' => 'admin/order',
-        'action' => 'changeOrderStatus',
+        'action' => 'setOrderStatus',
     ],
 ];

@@ -103,7 +103,7 @@ class Order extends Model
         return $query->rows;
     }
 
-    public function changeOrderStatus($order_id, $order_status_id) {
+    public function setOrderStatus($order_id, $order_status_id) {
         $sql = "UPDATE `order` SET order_status_id = '" . (int)$order_status_id . "' WHERE order_id = '" . (int)$order_id . "'";
 
         $this->db->query($sql);

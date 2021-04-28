@@ -188,12 +188,12 @@ class OrderController extends Controller
         }
     }
 
-    public function changeOrderStatusAction()
+    public function setOrderStatusAction()
     {
         $order_id = (int)filter_input(INPUT_POST, 'order_id', FILTER_SANITIZE_SPECIAL_CHARS);
         $order_status_id = (int)filter_input(INPUT_POST, 'order_status_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $this->model->changeOrderStatus($order_id, $order_status_id);
+        $this->model->setOrderStatus($order_id, $order_status_id);
 
         $json = [
             'success' => '1',
