@@ -16,14 +16,19 @@ class Order extends Model
 
         $order_id = $this->db->getLastId();
 
-        if (!empty($data['cart_products'])) {
-            foreach ($data['cart_products'] as $product) {
+        $this->addOrderProducts($order_id, $data['cart_products']);
+
+        return $order_id;
+    }
+
+    public function addOrderProducts($order_id, $cart_products = [])
+    {
+        if (!empty($cart_products)) {
+            foreach ($cart_products as $product) {
                 $sql = "INSERT INTO `order_item` (order_id, product_id, name, quantity, price, total) VALUES ('" . (int)$order_id . "', '" . (int)$product['product_id'] . "', '" . $this->db->escape($product['name']) . "', '" . intval($product['quantity']) . "', '" . floatval($product['priceSum']) . "', '" . floatval($product['totalSum']) . "')";
 
                 $this->db->query($sql);
             }
         }
-
-        return $order_id;
     }
 }
