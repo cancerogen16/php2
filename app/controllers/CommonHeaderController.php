@@ -34,8 +34,6 @@ class CommonHeaderController extends Controller
             'admin' => $admin,
         ];
 
-        $cartModel = new Cart;
-
         $count = 0;
         $total = 0;
 
@@ -43,7 +41,7 @@ class CommonHeaderController extends Controller
         $vars['count'] = 0;
         $vars['total'] = '';
 
-        if ($cart = $cartModel->getCart($user_id)) {
+        if ($cart = $this->loadModel('cart')->getCart($user_id)) {
             if (!empty($cart['products'])) {
                 $image_product_width = 50;
                 $image_product_height = 50;

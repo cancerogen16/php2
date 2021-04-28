@@ -17,9 +17,7 @@ class CheckoutController extends Controller
 
         $user_id = $this->user->getUserId();
 
-        $cartModel = new Cart;
-
-        $cart = $cartModel->getCart($user_id);
+        $cart = $this->loadModel('cart')->getCart($user_id);
 
         $image_product_width = 70;
         $image_product_height = 70;
@@ -94,7 +92,7 @@ class CheckoutController extends Controller
                 $order_id = $orderModel->addOrder($vars);
 
                 if ($order_id) {
-                    $cartModel->delete($cart['cart_id']);
+                    $this->loadModel('cart')->delete($cart['cart_id']);
 
                     $this->redirect('/');
                 }
@@ -119,11 +117,9 @@ class CheckoutController extends Controller
 
         $user_id = $this->user->getUserId();
 
-        $cartModel = new Cart;
+        $result = $this->loadModel('cart')->changeQuantity($product_id, $quantity, $user_id);
 
-        $result = $cartModel->changeQuantity($product_id, $quantity, $user_id);
-
-        $cart = $cartModel->getCart($user_id);
+        $cart = $this->loadModel('cart')->getCart($user_id);
 
         $image_product_width = 70;
         $image_product_height = 70;
@@ -192,11 +188,9 @@ class CheckoutController extends Controller
 
         $user_id = $this->user->getUserId();
 
-        $cartModel = new Cart;
+        $result = $this->loadModel('cart')->removeFromCart($product_id, $user_id);
 
-        $result = $cartModel->removeFromCart($product_id, $user_id);
-
-        $cart = $cartModel->getCart($user_id);
+        $cart = $this->loadModel('cart')->getCart($user_id);
 
         $image_product_width = 70;
         $image_product_height = 70;
