@@ -41,8 +41,31 @@ class ProductControllerTest extends TestCase
     {
         return [
             [65, '65'],
-            [4, 4],
+            [4, '4'],
             [5, 5],
+        ];
+    }
+
+    /**
+     * @dataProvider providerTestProductThumb
+     * @param $product_id
+     * @param $expected
+     */
+    public function testProductThumb($product_id, $expected)
+    {
+        $_GET['product_id'] = $product_id;
+
+        $vars = $this->product->productAction();
+
+        $this->assertSame($expected, $vars['product']['thumb']);
+    }
+
+    public function providerTestProductThumb()
+    {
+        return [
+            [65, 'cache/1-500x500.jpg'],
+            [0, 'cache/noimage-500x500.jpg'],
+            [5, 'cache/noimage-500x500.jpg'],
         ];
     }
 }
