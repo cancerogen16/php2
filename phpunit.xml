@@ -5,9 +5,12 @@
         <testsuite name="orders-tests">
             <directory suffix="Test.php">./app/tests/controllers/Admin</directory>
         </testsuite>
+        <testsuite name="product-tests">
+            <directory suffix="Test.php">./app/tests/controllers</directory>
+        </testsuite>
     </testsuites>
     <php>
-        <env name="HTTP_SERVER" value="http://localhost:8080/" />
+        <env name="APP_ROOT" value="C:\OpenServer\domains\php2\" />
         <env name="TEST_CONFIG" value="test-config" />
     </php>
 </phpunit>
