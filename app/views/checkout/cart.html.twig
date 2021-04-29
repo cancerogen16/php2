@@ -17,8 +17,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% if products %}
-                        {% for product in products %}
+                    {% if cart_products %}
+                        {% for product in cart_products %}
                             <tr>
                                 <td class="number">
                                     {{ loop.index }}
@@ -50,7 +50,7 @@
                     {% endif %}
                     </tbody>
                     <tfoot>
-                    {% if products %}
+                    {% if cart_products %}
                         <tr>
                             <td colspan="4">Итого</td>
                             <td class="quantity">{{ count }}</td>
@@ -63,7 +63,7 @@
             </div>
             <div class="cart-btns d-flex justify-content-between">
                 <a class="btn btn-secondary" href="/catalog" title="Продолжить покупки">Продолжить покупки</a>
-                {% if products %}
+                {% if cart_products %}
                     <a class="btn btn-primary" href="/checkout" title="Оформление заказа">Оформление заказа</a>
                 {% endif %}
             </div>

@@ -3,8 +3,6 @@
 namespace app\controllers;
 
 use app\core\Controller;
-use app\models\Cart;
-use app\models\Product;
 
 class CommonHeaderController extends Controller
 {
@@ -34,35 +32,21 @@ class CommonHeaderController extends Controller
             'admin' => $admin,
         ];
 
-        $count = 0;
-        $total = 0;
-
+        $vars['count'] = 0;
+        $vars['totalSum'] = 0;
+        $vars['total'] = '';
         $vars['cart_products'] = [];
 
         if ($cart = $this->loadModel('cart')->getCart($user_id)) {
             if (!empty($cart['products'])) {
-                require_once DIR_HELPERS . 'tools.php';
+                $cartData = $this->loadModel('product')->getCartData($cart['products'], 50, 50);
 
-                foreach ($cart['products'] as $product_id => $quantity) {
-                    $product = $this->loadModel('product')->getProduct($product_id);
-
-                    $total += $quantity * $product['price'];
-
-                    $product['thumb'] = getThumb($product['image'], 50, 50);
-
-                    $product['quantity'] = $quantity;
-                    $product['total'] = priceFormat((float)$product['price'] * $quantity);
-                    $product['price'] = priceFormat($product['price']);
-
-                    $vars['cart_products'][] = $product;
-
-                    $count++;
-                }
+                $vars['count'] = $cartData['count'];
+                $vars['totalSum'] = $cartData['totalSum'];
+                $vars['total'] = $cartData['total'];
+                $vars['cart_products'] = $cartData['products'];
             }
         }
-
-        $vars['count'] = $count;
-        $vars['total'] = priceFormat($total);
 
         $template = 'common/header.tmpl';
 

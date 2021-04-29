@@ -14,9 +14,8 @@ class ProductController extends Controller
 
         $product_info = $this->model->getProduct($product_id);
 
-        require_once DIR_HELPERS . 'tools.php';
-
         $product_info['thumb'] = getThumb($product_info['image'], 500, 500);
+
         $product_info['price'] = priceFormat($product_info['price']);
 
         $vars['title'] = $product_info['name'];

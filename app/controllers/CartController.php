@@ -3,15 +3,11 @@
 namespace app\controllers;
 
 use app\core\Controller;
-use app\models\Cart;
-use app\models\Product;
 
 class CartController extends Controller
 {
     public function cartAction()
     {
-        require_once DIR_HELPERS . 'tools.php';
-        
         $vars = [
             'title' => 'Корзина',
         ];
@@ -20,31 +16,19 @@ class CartController extends Controller
 
         $cart = $this->model->getCart($user_id);
 
-        require_once DIR_HELPERS . 'tools.php';
+        $vars['count'] = 0;
+        $vars['totalSum'] = 0;
+        $vars['total'] = '';
+        $vars['cart_products'] = [];
 
-        $count = 0;
-        $total = 0;
+        if (!empty($cart['products'])) {
+            $cartData = $this->loadModel('product')->getCartData($cart['products'], 50, 50);
 
-        $vars['products'] = [];
-
-        foreach ($cart['products'] as $product_id => $quantity) {
-            $product = $this->loadModel('product')->getProduct($product_id);
-
-            $total += $quantity * $product['price'];
-
-            $product['thumb'] = getThumb($product['image'], 50, 50);
-
-            $product['quantity'] = $quantity;
-            $product['total'] = priceFormat((float)$product['price'] * $quantity);
-            $product['price'] = priceFormat($product['price']);
-
-            $vars['products'][] = $product;
-
-            $count++;
+            $vars['count'] = $cartData['count'];
+            $vars['totalSum'] = $cartData['totalSum'];
+            $vars['total'] = $cartData['total'];
+            $vars['cart_products'] = $cartData['products'];
         }
-
-        $vars['count'] = $count;
-        $vars['total'] = priceFormat($total);
 
         $vars['header'] = $this->getChild('CommonHeader', '');
 
@@ -59,50 +43,28 @@ class CartController extends Controller
         
         $product_id = (int)filter_input(INPUT_POST, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
 
-        $count = 0;
-        $total = 0;
-
         $product_info = $this->loadModel('product')->getProduct($product_id);
 
         if ($product_info) {
-            require_once DIR_HELPERS . 'tools.php';
-
             $quantity = (int)filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_SPECIAL_CHARS);
 
             $user_id = $this->user->getUserId();
 
             $result = $this->model->add($product_id, $quantity, $user_id);
 
-            $products = [];
-
             $cart = $this->model->getCart($user_id);
 
             if (!empty($cart['products'])) {
-                foreach ($cart['products'] as $product_id => $quantity) {
-                    $product = $this->loadModel('product')->getProduct($product_id);
+                $cartData = $this->loadModel('product')->getCartData($cart['products'], 40, 40);
 
-                    $total += $quantity * $product['price'];
-
-                    $product['thumb'] = getThumb($product['image'], 40, 40);
-
-                    $product['quantity'] = $quantity;
-                    $product['totalSum'] = (float)$product['price'] * $quantity;
-                    $product['total'] = priceFormat((float)$product['price'] * $quantity);
-                    $product['priceSum'] = $product['price'];
-                    $product['price'] = priceFormat($product['price']);
-
-                    $products[] = $product;
-
-                    $count++;
-                }
+                $json = [
+                    'success' => '1',
+                    'products' => $cartData['products'],
+                    'count' => $cartData['count'],
+                    'totalSum' => $cartData['totalSum'],
+                    'total' => $cartData['total'],
+                ];
             }
-
-            $json = [
-                'success' => '1',
-                'products' => $products,
-                'count' => $count,
-                'total' => priceFormat($total),
-            ];
         }
 
         exit(json_encode($json));
@@ -122,36 +84,31 @@ class CartController extends Controller
 
         $cart = $this->model->getCart($user_id);
 
-        $count = 0;
-        $total = 0;
+        $vars['count'] = 0;
+        $vars['totalSum'] = 0;
+        $vars['total'] = '';
+        $vars['cart_products'] = [];
 
-        foreach ($cart['products'] as $product_id => $quantity) {
-            $product = $this->loadModel('product')->getProduct($product_id);
+        if (!empty($cart['products'])) {
+            $cartData = $this->loadModel('product')->getCartData($cart['products'], 40, 40);
 
-            $total += $quantity * $product['price'];
+            $json = [
+                'success' => '1',
+                'products' => $cartData['products'],
+                'count' => $cartData['count'],
+                'totalSum' => $cartData['totalSum'],
+                'total' => $cartData['total'],
+            ];
 
-            $product['quantity'] = $quantity;
-            $product['total'] = priceFormat((float)$product['price'] * $quantity);
-            $product['price'] = priceFormat($product['price']);
-
-            $count++;
+            $vars['cart_products'] = $cartData['products'];
+            $vars['count'] = $cartData['count'];
+            $vars['totalSum'] = $cartData['totalSum'];
+            $vars['total'] = $cartData['total'];
         }
-
-        $vars['products'] = $cart['products'];
-        $vars['count'] = $count;
-        $vars['total'] = $total;
 
         $template = 'checkout/cart.html.twig';
 
-        $pageCart = $this->view->render($template, $vars);
-
-        $json = [
-            'success' => '1',
-            'products' => $cart['products'],
-            'count' => $count,
-            'total' => $total,
-            'pageCart' => $pageCart,
-        ];
+        $json['pageCart'] = $this->view->render($template, $vars);
 
         exit(json_encode($json));
     }
