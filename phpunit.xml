@@ -1,7 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <phpunit bootstrap="vendor/autoload.php">
     <testsuites>
-        <testsuite name="orders">
-            <directory suffix="Test.php">tests\controllers\Admin</directory>
+        <testsuite name="orders-tests">
+            <directory suffix="Test.php">./app/tests/controllers/Admin</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <env name="HTTP_SERVER" value="http://localhost:8080/" />
+        <env name="TEST_CONFIG" value="test-config" />
+    </php>
 </phpunit>
