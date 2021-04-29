@@ -24,7 +24,9 @@ class ProductController extends Controller
         $this->getForm();
     }
 
-    public function deleteAction() {}
+    public function deleteAction() {
+        //TODO
+    }
 
     public function updateAction() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

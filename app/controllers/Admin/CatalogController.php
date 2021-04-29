@@ -70,6 +70,7 @@ class CatalogController extends Controller
 
     public function categoryAction()
     {
+        // TODO
         $vars = [];
 
         $this->view->display('category', $vars);

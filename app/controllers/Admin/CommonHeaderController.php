@@ -30,38 +30,6 @@ class CommonHeaderController extends Controller
             'user_id' => $user_id,
         ];
 
-        $count = 0;
-        $total = 0;
-
-        $vars['cart_products'] = [];
-        $vars['count'] = 0;
-        $vars['total'] = '';
-
-        if ($cart = $this->loadModel('cart')->getCart($user_id)) {
-            if (!empty($cart['products'])) {
-                require_once DIR_HELPERS . 'tools.php';
-
-                foreach ($cart['products'] as $product_id => $quantity) {
-                    $product = $this->loadModel('product')->getProduct($product_id);
-
-                    $total += $quantity * $product['price'];
-
-                    $product['thumb'] = getThumb($product['image'], 50, 50);
-
-                    $product['quantity'] = $quantity;
-                    $product['total'] = priceFormat((float)$product['price'] * $quantity);
-                    $product['price'] = priceFormat($product['price']);
-
-                    $vars['cart_products'][] = $product;
-
-                    $count++;
-                }
-
-                $vars['count'] = $count;
-                $vars['total'] = priceFormat($total);
-            }
-        }
-
         $template = 'admin/common/header.tmpl';
 
         return $this->view->render($template, $vars);
