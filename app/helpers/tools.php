@@ -63,3 +63,24 @@ function resize($filename, $width, $height, $type = "")
 
     return $new_image;
 }
+
+/**
+ * @param $image
+ * @param $width
+ * @param $height
+ * @return string
+ */
+function getThumb($image, $width, $height)
+{
+    if ($image) {
+        $thumb = resize($image, $width, $height);
+    } else {
+        $thumb = resize('noimage.jpg', $width, $height);
+    }
+
+    if (!$thumb) {
+        $thumb = resize('noimage.jpg', $width, $height);
+    }
+
+    return $thumb;
+}

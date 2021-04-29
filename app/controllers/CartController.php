@@ -20,9 +20,6 @@ class CartController extends Controller
 
         $cart = $this->model->getCart($user_id);
 
-        $image_product_width = 50;
-        $image_product_height = 50;
-
         require_once DIR_HELPERS . 'tools.php';
 
         $count = 0;
@@ -35,13 +32,7 @@ class CartController extends Controller
 
             $total += $quantity * $product['price'];
 
-            if ($product['image']) {
-                $image = resize($product['image'], $image_product_width, $image_product_height);
-            } else {
-                $image = resize('noimage.jpg', $image_product_width, $image_product_height);
-            }
-
-            $product['thumb'] = $image;
+            $product['thumb'] = getThumb($product['image'], 50, 50);
 
             $product['quantity'] = $quantity;
             $product['total'] = priceFormat((float)$product['price'] * $quantity);
@@ -87,21 +78,12 @@ class CartController extends Controller
             $cart = $this->model->getCart($user_id);
 
             if (!empty($cart['products'])) {
-                $image_product_width = 40;
-                $image_product_height = 40;
-
                 foreach ($cart['products'] as $product_id => $quantity) {
                     $product = $this->loadModel('product')->getProduct($product_id);
 
                     $total += $quantity * $product['price'];
 
-                    if ($product['image']) {
-                        $image = resize($product['image'], $image_product_width, $image_product_height);
-                    } else {
-                        $image = resize('noimage.jpg', $image_product_width, $image_product_height);
-                    }
-
-                    $product['thumb'] = $image;
+                    $product['thumb'] = getThumb($product['image'], 40, 40);
 
                     $product['quantity'] = $quantity;
                     $product['totalSum'] = (float)$product['price'] * $quantity;

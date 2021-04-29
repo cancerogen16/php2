@@ -19,9 +19,6 @@ class CheckoutController extends Controller
 
         $cart = $this->loadModel('cart')->getCart($user_id);
 
-        $image_product_width = 70;
-        $image_product_height = 70;
-
         require_once DIR_HELPERS . 'tools.php';
 
         $count = 0;
@@ -35,13 +32,7 @@ class CheckoutController extends Controller
 
                 $total += $quantity * $product['price'];
 
-                if ($product['image']) {
-                    $image = resize($product['image'], $image_product_width, $image_product_height);
-                } else {
-                    $image = resize('noimage.jpg', $image_product_width, $image_product_height);
-                }
-
-                $product['thumb'] = $image;
+                $product['thumb'] = getThumb($product['image'], 70, 70);
 
                 $product['quantity'] = $quantity;
                 $product['totalSum'] = (float)$product['price'] * $quantity;
@@ -119,9 +110,6 @@ class CheckoutController extends Controller
 
         $cart = $this->loadModel('cart')->getCart($user_id);
 
-        $image_product_width = 70;
-        $image_product_height = 70;
-
         require_once DIR_HELPERS . 'tools.php';
 
         $count = 0;
@@ -135,13 +123,7 @@ class CheckoutController extends Controller
 
                 $total += $quantity * $product['price'];
 
-                if ($product['image']) {
-                    $image = resize($product['image'], $image_product_width, $image_product_height);
-                } else {
-                    $image = resize('noimage.jpg', $image_product_width, $image_product_height);
-                }
-
-                $product['thumb'] = $image;
+                $product['thumb'] = getThumb($product['image'], 70, 70);
 
                 $product['quantity'] = $quantity;
                 $product['totalSum'] = (float)$product['price'] * $quantity;
@@ -188,9 +170,6 @@ class CheckoutController extends Controller
 
         $cart = $this->loadModel('cart')->getCart($user_id);
 
-        $image_product_width = 70;
-        $image_product_height = 70;
-
         require_once DIR_HELPERS . 'tools.php';
 
         $count = 0;
@@ -204,13 +183,7 @@ class CheckoutController extends Controller
 
                 $total += $quantity * $product['price'];
 
-                if ($product['image']) {
-                    $image = resize($product['image'], $image_product_width, $image_product_height);
-                } else {
-                    $image = resize('noimage.jpg', $image_product_width, $image_product_height);
-                }
-
-                $product['thumb'] = $image;
+                $product['thumb'] = getThumb($product['image'], 70, 70);
 
                 $product['quantity'] = $quantity;
                 $product['totalSum'] = (float)$product['price'] * $quantity;

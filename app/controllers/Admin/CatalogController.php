@@ -31,9 +31,6 @@ class CatalogController extends Controller
 
         $products = [];
 
-        $image_product_width = 150;
-        $image_product_height = 150;
-
         require_once DIR_HELPERS . 'tools.php';
 
         $totalProducts = (int)$this->model->getTotalProducts();
@@ -44,17 +41,11 @@ class CatalogController extends Controller
 
         if (!empty($results)) {
             foreach ($results as $result) {
-                if ($result['image']) {
-                    $image = resize($result['image'], $image_product_width, $image_product_height);
-                } else {
-                    $image = resize('noimage.jpg', $image_product_width, $image_product_height);
-                }
-
                 $href = "/product?product_id={$result['product_id']}";
 
                 $products[] = [
                     'product_id' => $result['product_id'],
-                    'thumb' => $image,
+                    'thumb' => getThumb($result['image'], 150, 150),
                     'name' => $result['name'],
                     'quantity' => (int)$result['quantity'],
                     'price' => priceFormat($result['price']),

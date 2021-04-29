@@ -39,9 +39,6 @@ class CommonHeaderController extends Controller
 
         if ($cart = $this->loadModel('cart')->getCart($user_id)) {
             if (!empty($cart['products'])) {
-                $image_product_width = 50;
-                $image_product_height = 50;
-
                 require_once DIR_HELPERS . 'tools.php';
 
                 foreach ($cart['products'] as $product_id => $quantity) {
@@ -49,13 +46,7 @@ class CommonHeaderController extends Controller
 
                     $total += $quantity * $product['price'];
 
-                    if ($product['image']) {
-                        $image = resize($product['image'], $image_product_width, $image_product_height);
-                    } else {
-                        $image = resize('noimage.jpg', $image_product_width, $image_product_height);
-                    }
-
-                    $product['thumb'] = $image;
+                    $product['thumb'] = getThumb($product['image'], 50, 50);
 
                     $product['quantity'] = $quantity;
                     $product['total'] = priceFormat((float)$product['price'] * $quantity);
