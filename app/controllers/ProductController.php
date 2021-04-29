@@ -28,6 +28,11 @@ class ProductController extends Controller
 
         $template = 'product/product.html.twig';
 
-        $this->view->display($template, $vars);
+        if (isset($_POST['test']) && $_POST['test'] == '1') {
+            return $vars;
+        } else {
+            $this->view->display($template, $vars);
+            return true;
+        }
     }
 }
