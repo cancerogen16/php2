@@ -1,6 +1,6 @@
 <?php
 
-namespace controllers\Admin;
+namespace app\tests\controllers\Admin;
 
 use app\controllers\Admin\OrderController;
 use PHPUnit\Framework\TestCase;
