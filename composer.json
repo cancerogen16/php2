@@ -10,7 +10,8 @@
     "require": {
         "twig/twig": "^3.0",
         "ext-json": "*",
-        "ext-mysqli": "*"
+        "ext-mysqli": "*",
+        "ext-simplexml": "*"
     },
     "autoload": {
         "psr-4": {
