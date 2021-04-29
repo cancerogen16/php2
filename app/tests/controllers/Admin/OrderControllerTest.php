@@ -38,9 +38,7 @@ class OrderControllerTest extends TestCase
 
     public function testGetForm()
     {
-        $_POST['username'] = 'test_user';
-        $_POST['phone'] = '12345';
-        $_POST['address'] = '';
+        $_POST['username'] = $_POST['phone'] = $_POST['address'] = '';
 
         $order_id = 15;
         $_GET['order_id'] = $order_id;
