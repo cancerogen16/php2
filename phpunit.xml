@@ -10,7 +10,7 @@
         </testsuite>
     </testsuites>
     <logging>
-        <log type="junit" target="build/report.junit.xml"/>
+        <log type="junit" target="build/logs/report.junit.xml"/>
     </logging>
     <php>
         <env name="APP_ROOT" value="C:\OpenServer\domains\php2\" />
