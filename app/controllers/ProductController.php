@@ -10,7 +10,7 @@ class ProductController extends Controller
     {
         $vars = [];
 
-        $product_id = filter_input(INPUT_GET, 'product_id', FILTER_SANITIZE_SPECIAL_CHARS);
+        $product_id = (int)$_GET['product_id'];
 
         $product_info = $this->model->getProduct($product_id);
 
