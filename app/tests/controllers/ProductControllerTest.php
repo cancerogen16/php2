@@ -1,6 +1,6 @@
 <?php
 
-namespace controllers;
+namespace app\tests\controllers;
 
 use app\controllers\ProductController;
 use PHPUnit\Framework\TestCase;
@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 class ProductControllerTest extends TestCase
 {
     private $route;
-    private $product;
+    private $productFixture;
 
     protected function setUp() :void
     {
@@ -20,7 +20,7 @@ class ProductControllerTest extends TestCase
 
         $this->route = $routes['product'];
 
-        $this->product = new ProductController($this->route);
+        $this->productFixture = new ProductController($this->route);
     }
 
     /**
@@ -32,7 +32,7 @@ class ProductControllerTest extends TestCase
     {
         $_GET['product_id'] = $product_id;
 
-        $vars = $this->product->productAction();
+        $vars = $this->productFixture->productAction();
 
         $this->assertSame($expected, $vars['product']['product_id']);
     }
@@ -41,8 +41,7 @@ class ProductControllerTest extends TestCase
     {
         return [
             [65, '65'],
-            [4, '4'],
-            [5, 5],
+            [61471, '61471'],
         ];
     }
 
@@ -55,7 +54,7 @@ class ProductControllerTest extends TestCase
     {
         $_GET['product_id'] = $product_id;
 
-        $vars = $this->product->productAction();
+        $vars = $this->productFixture->productAction();
 
         $this->assertSame($expected, $vars['product']['thumb']);
     }
@@ -68,4 +67,19 @@ class ProductControllerTest extends TestCase
             [5, 'cache/noimage-500x500.jpg'],
         ];
     }
+
+    public function testRender()
+    {
+        $template = 'product/product.html.twig';
+
+        $vars = [];
+        $content = "Нет товара в базе данных";
+        $this->assertStringContainsString($content, $this->productFixture->view->render($template, $vars), "Содержимое не соответствует");
+    }
+
+    protected function tearDown() : void
+    {
+        $this->productFixture = NULL;
+    }
+
 }
