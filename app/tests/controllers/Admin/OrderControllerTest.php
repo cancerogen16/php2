@@ -11,7 +11,7 @@ class OrderControllerTest extends TestCase
 
     protected function setUp() : void
     {
-        $root = dirname(dirname(dirname(dirname(__DIR__))));
+        $root = getenv('APP_ROOT');
         require_once $root . '/app/config/config.php';
         $routes = require $root . '/app/config/routes.php';
 
